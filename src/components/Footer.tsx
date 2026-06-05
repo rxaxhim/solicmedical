@@ -41,7 +41,7 @@ export default function Footer() {
             <div className="flex items-center gap-3">
               <div className="relative h-16 w-20 rounded-md bg-white p-1">
                 <Image
-                  src="/images/logo.png"
+                  src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/images/logo.png`}
                   alt="Solic Medical"
                   fill
                   className="object-contain p-1"

@@ -61,7 +61,7 @@ export default function Navbar() {
           <Link href="/" className="flex items-center gap-3">
             <div className="relative h-16 w-20">
               <Image
-                src="/images/logo.png"
+                src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/images/logo.png`}
                 alt="Solic Medical"
                 fill
                 priority
