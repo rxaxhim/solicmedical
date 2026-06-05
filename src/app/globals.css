@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+  body {
+    @apply bg-surface text-navy-800;
+  }
+  ::selection {
+    @apply bg-navy-100 text-navy-900;
+  }
+}
+
+@layer components {
+  .container-x {
+    @apply mx-auto w-full max-w-8xl px-6 lg:px-12;
+  }
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-md bg-navy-800 px-6 py-3.5 text-sm font-semibold text-white transition-colors duration-150 hover:bg-navy-700;
+  }
+  .btn-light {
+    @apply inline-flex items-center justify-center gap-2 rounded-md bg-white px-6 py-3.5 text-sm font-semibold text-navy-900 transition-colors duration-150 hover:bg-navy-100;
+  }
+  .btn-ghost-light {
+    @apply inline-flex items-center justify-center gap-2 rounded-md border border-white/40 bg-transparent px-6 py-3.5 text-sm font-semibold text-white transition-colors duration-150 hover:bg-white/10;
+  }
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-md border border-navy-200 bg-white px-6 py-3.5 text-sm font-semibold text-navy-800 transition-colors duration-150 hover:border-navy-800 hover:bg-navy-50;
+  }
+  .eyebrow {
+    @apply text-xs font-semibold uppercase tracking-[0.14em] text-accent-600;
+  }
+  .eyebrow-light {
+    @apply text-xs font-semibold uppercase tracking-[0.14em] text-accent-500;
+  }
+}
