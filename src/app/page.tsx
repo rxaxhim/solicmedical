@@ -6,49 +6,56 @@ import {
   Truck,
   HeadphonesIcon,
   CheckCircle2,
+  Activity,
+  Heart,
+  Baby,
+  Armchair,
+  Scan,
+  Stethoscope,
+  PawPrint,
+  Package,
 } from 'lucide-react';
 
-// Category images — Unsplash placeholders, will be replaced with real product/category images later
 const categories = [
   {
     name: 'Patient Monitoring',
     desc: 'Vital signs monitors, dopplers, and continuous monitoring solutions.',
-    image: 'https://images.unsplash.com/photo-1538108149393-fbbd81895907?w=800&q=80&auto=format&fit=crop',
+    icon: Activity,
   },
   {
     name: 'Cardio Diagnostics',
     desc: 'ECG machines, stethoscopes, and cardiac diagnostic equipment.',
-    image: 'https://images.unsplash.com/photo-1530497610245-94d3c16cda28?w=800&q=80&auto=format&fit=crop',
+    icon: Heart,
   },
   {
     name: 'OB & GYN',
-    desc: 'Examination tables, fetal monitors, and women\'s health equipment.',
-    image: 'https://images.unsplash.com/photo-1631815589968-fdb09a223b1e?w=800&q=80&auto=format&fit=crop',
+    desc: "Examination tables, fetal monitors, and women's health equipment.",
+    icon: Baby,
   },
   {
     name: 'Exam Room Furniture',
     desc: 'Examination tables, stools, mayo stands, and clinic furniture.',
-    image: 'https://images.unsplash.com/photo-1666214280391-8ff5bd3c0bf0?w=800&q=80&auto=format&fit=crop',
+    icon: Armchair,
   },
   {
     name: 'Ultrasounds',
     desc: 'Diagnostic ultrasound systems for clinics and specialty practices.',
-    image: 'https://images.unsplash.com/photo-1691933880037-ce9d151ab922?w=800&q=80&auto=format&fit=crop',
+    icon: Scan,
   },
   {
     name: 'Riester',
     desc: 'Premium German-engineered diagnostic instruments and accessories.',
-    image: 'https://images.unsplash.com/photo-1584467735815-f778f274e296?w=800&q=80&auto=format&fit=crop',
+    icon: Stethoscope,
   },
   {
     name: 'Animal Care',
     desc: 'Veterinary equipment and supplies for animal health professionals.',
-    image: 'https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=800&q=80&auto=format&fit=crop',
+    icon: PawPrint,
   },
   {
     name: 'Others',
     desc: 'Specialty products, accessories, and additional medical supplies.',
-    image: 'https://images.unsplash.com/photo-1551601651-2a8555f1a136?w=800&q=80&auto=format&fit=crop',
+    icon: Package,
   },
 ];
 
@@ -172,31 +179,28 @@ export default function HomePage() {
           </div>
 
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {categories.map((c) => (
-              <Link
-                key={c.name}
-                href="/products"
-                className="group flex flex-col overflow-hidden rounded-lg border border-border bg-white transition-all hover:-translate-y-0.5 hover:shadow-card-hover"
-              >
-                <div className="relative aspect-[4/3] overflow-hidden bg-muted">
-                  <Image
-                    src={c.image}
-                    alt={c.name}
-                    fill
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                  />
-                </div>
-                <div className="flex flex-1 flex-col p-6">
-                  <h3 className="text-lg font-semibold text-navy-900">{c.name}</h3>
-                  <p className="mt-2 flex-1 text-sm text-navy-600">{c.desc}</p>
-                  <div className="mt-5 flex items-center gap-1.5 text-sm font-semibold text-navy-800 group-hover:text-accent-600">
+            {categories.map((c) => {
+              const Icon = c.icon;
+              return (
+                <Link
+                  key={c.name}
+                  href="/products"
+                  className="group flex flex-col items-center justify-center gap-5 rounded-lg bg-navy-800 px-6 py-10 text-center transition-all hover:-translate-y-0.5 hover:bg-navy-700 hover:shadow-card-hover"
+                >
+                  <div className="flex h-16 w-16 items-center justify-center rounded-xl bg-white/10 ring-1 ring-white/20 transition-colors group-hover:bg-white/20">
+                    <Icon className="h-8 w-8 text-accent-500" strokeWidth={1.5} />
+                  </div>
+                  <div>
+                    <h3 className="text-base font-semibold text-white">{c.name}</h3>
+                    <p className="mt-1.5 text-sm leading-relaxed text-navy-200">{c.desc}</p>
+                  </div>
+                  <div className="flex items-center gap-1.5 text-sm font-semibold text-white/70 transition-colors group-hover:text-white">
                     Shop now
                     <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
                   </div>
-                </div>
-              </Link>
-            ))}
+                </Link>
+              );
+            })}
           </div>
         </div>
       </section>
