@@ -63,6 +63,7 @@ export type Database = {
           model_code: string | null;
           description: string | null;
           category_id: string | null;
+          subcategory_id: string | null;
           brand: string | null;
           featured: boolean;
           display_order: number;
@@ -76,6 +77,7 @@ export type Database = {
           model_code?: string | null;
           description?: string | null;
           category_id?: string | null;
+          subcategory_id?: string | null;
           brand?: string | null;
           featured?: boolean;
           display_order?: number;
@@ -89,6 +91,7 @@ export type Database = {
           model_code?: string | null;
           description?: string | null;
           category_id?: string | null;
+          subcategory_id?: string | null;
           brand?: string | null;
           featured?: boolean;
           display_order?: number;
@@ -98,6 +101,49 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "products_category_id_fkey";
+            columns: ["category_id"];
+            referencedRelation: "categories";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "products_subcategory_id_fkey";
+            columns: ["subcategory_id"];
+            referencedRelation: "subcategories";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      subcategories: {
+        Row: {
+          id: string;
+          category_id: string;
+          name: string;
+          slug: string;
+          display_order: number;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          category_id: string;
+          name: string;
+          slug: string;
+          display_order?: number;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          category_id?: string;
+          name?: string;
+          slug?: string;
+          display_order?: number;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "subcategories_category_id_fkey";
             columns: ["category_id"];
             referencedRelation: "categories";
             referencedColumns: ["id"];
@@ -279,6 +325,7 @@ export type Database = {
           id: string;
           product_id: string;
           name: string;
+          product_code: string | null;
           description: string | null;
           image_url: string | null;
           display_order: number;
@@ -288,6 +335,7 @@ export type Database = {
           id?: string;
           product_id: string;
           name: string;
+          product_code?: string | null;
           description?: string | null;
           image_url?: string | null;
           display_order?: number;
@@ -297,6 +345,7 @@ export type Database = {
           id?: string;
           product_id?: string;
           name?: string;
+          product_code?: string | null;
           description?: string | null;
           image_url?: string | null;
           display_order?: number;

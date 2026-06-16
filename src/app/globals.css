@@ -36,6 +36,9 @@
   .eyebrow {
     @apply text-xs font-semibold uppercase tracking-[0.14em] text-accent-600;
   }
+  .input {
+    @apply w-full rounded-md border border-border bg-white px-3 py-2.5 text-sm text-navy-900 placeholder:text-navy-400 focus:border-navy-400 focus:outline-none focus:ring-1 focus:ring-navy-400;
+  }
   .eyebrow-light {
     @apply text-xs font-semibold uppercase tracking-[0.14em] text-accent-500;
   }

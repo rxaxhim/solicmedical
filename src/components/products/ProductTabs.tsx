@@ -1,0 +1,201 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+import { FileText, Settings2, BookOpen, Package } from "lucide-react";
+import type {
+  Accessory,
+  ProductConfiguration,
+  ProductDocument,
+  ProductVideo,
+} from "@/lib/products";
+import Markdown from "./Markdown";
+import DocumentCard from "./DocumentCard";
+import VideoGrid from "./VideoGrid";
+import AccessoryGrid from "./AccessoryGrid";
+
+interface ProductTabsProps {
+  overview: string | null;
+  configurations: ProductConfiguration[];
+  documents: ProductDocument[];
+  videos: ProductVideo[];
+  accessories: Accessory[];
+}
+
+const TABS = [
+  { id: "overview", label: "Overview", icon: FileText },
+  { id: "configurations", label: "Configurations", icon: Settings2 },
+  { id: "documentation", label: "Education & Documentation", icon: BookOpen },
+  { id: "accessories", label: "Parts & Accessories", icon: Package },
+] as const;
+
+type TabId = (typeof TABS)[number]["id"];
+
+export default function ProductTabs(props: ProductTabsProps) {
+  const { overview, configurations, documents, videos, accessories } = props;
+  const [active, setActive] = useState<TabId>("overview");
+  const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
+
+  // Sync from the URL hash on mount.
+  useEffect(() => {
+    const hash = window.location.hash.replace("#", "");
+    if (TABS.some((t) => t.id === hash)) setActive(hash as TabId);
+  }, []);
+
+  function selectTab(id: TabId) {
+    setActive(id);
+    // Update the hash without jumping the scroll position.
+    history.replaceState(null, "", `#${id}`);
+  }
+
+  function onKeyDown(e: React.KeyboardEvent) {
+    const idx = TABS.findIndex((t) => t.id === active);
+    let nextIdx: number | null = null;
+    if (e.key === "ArrowRight") nextIdx = (idx + 1) % TABS.length;
+    else if (e.key === "ArrowLeft") nextIdx = (idx - 1 + TABS.length) % TABS.length;
+    else if (e.key === "Home") nextIdx = 0;
+    else if (e.key === "End") nextIdx = TABS.length - 1;
+    if (nextIdx !== null) {
+      e.preventDefault();
+      const t = TABS[nextIdx];
+      selectTab(t.id);
+      tabRefs.current[nextIdx]?.focus();
+    }
+  }
+
+  return (
+    <section className="border-t border-border bg-white">
+      <div className="container-x">
+        {/* Tab bar */}
+        <div
+          role="tablist"
+          aria-label="Product information"
+          onKeyDown={onKeyDown}
+          className="flex gap-1 overflow-x-auto border-b border-border"
+        >
+          {TABS.map((tab, i) => {
+            const Icon = tab.icon;
+            const selected = active === tab.id;
+            return (
+              <button
+                key={tab.id}
+                ref={(el) => {
+                  tabRefs.current[i] = el;
+                }}
+                role="tab"
+                id={`tab-${tab.id}`}
+                aria-selected={selected}
+                aria-controls={`panel-${tab.id}`}
+                tabIndex={selected ? 0 : -1}
+                onClick={() => selectTab(tab.id)}
+                className={`flex flex-none items-center gap-2 whitespace-nowrap border-b-[3px] px-4 py-4 text-sm transition-colors ${
+                  selected
+                    ? "border-navy-800 font-semibold text-navy-900"
+                    : "border-transparent font-medium text-navy-500 hover:text-navy-800"
+                }`}
+              >
+                <Icon className="h-4 w-4" />
+                {tab.label}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Panels */}
+        <div className="py-16">
+          {/* Overview */}
+          <div
+            role="tabpanel"
+            id="panel-overview"
+            aria-labelledby="tab-overview"
+            hidden={active !== "overview"}
+          >
+            {overview ? (
+              <Markdown>{overview}</Markdown>
+            ) : (
+              <p className="text-navy-600">
+                Overview information for this product is coming soon.
+              </p>
+            )}
+          </div>
+
+          {/* Configurations */}
+          <div
+            role="tabpanel"
+            id="panel-configurations"
+            aria-labelledby="tab-configurations"
+            hidden={active !== "configurations"}
+          >
+            {configurations.length > 0 ? (
+              <div className="space-y-8">
+                {configurations.map((c) => (
+                  <div key={c.id}>
+                    <h3 className="text-lg font-semibold text-navy-900">
+                      {c.config_name}
+                    </h3>
+                    {c.config_details && (
+                      <div className="mt-2">
+                        <Markdown>{c.config_details}</Markdown>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-navy-600">
+                Configuration details for this product are coming soon.
+              </p>
+            )}
+          </div>
+
+          {/* Education & Documentation */}
+          <div
+            role="tabpanel"
+            id="panel-documentation"
+            aria-labelledby="tab-documentation"
+            hidden={active !== "documentation"}
+          >
+            {documents.length > 0 || videos.length > 0 ? (
+              <div className="space-y-12">
+                {documents.length > 0 && (
+                  <div>
+                    <h3 className="mb-5 text-lg font-semibold text-navy-900">
+                      Documents
+                    </h3>
+                    <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                      {documents.map((d) => (
+                        <DocumentCard key={d.id} doc={d} />
+                      ))}
+                    </div>
+                  </div>
+                )}
+                {videos.length > 0 && (
+                  <div>
+                    <h3 className="mb-5 text-lg font-semibold text-navy-900">
+                      Videos
+                    </h3>
+                    <VideoGrid videos={videos} />
+                  </div>
+                )}
+              </div>
+            ) : (
+              <p className="text-navy-600">
+                Documentation and educational content for this product are
+                coming soon.
+              </p>
+            )}
+          </div>
+
+          {/* Parts & Accessories */}
+          <div
+            role="tabpanel"
+            id="panel-accessories"
+            aria-labelledby="tab-accessories"
+            hidden={active !== "accessories"}
+          >
+            <AccessoryGrid accessories={accessories} />
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}

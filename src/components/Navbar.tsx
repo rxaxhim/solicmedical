@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { Menu, X, Phone, Mail, Search, ChevronRight } from 'lucide-react';
+import SearchModal from './SearchModal';
 
 const links = [
   { href: '/', label: 'Home' },
@@ -16,12 +17,25 @@ const links = [
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 4);
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  // Cmd/Ctrl+K opens search.
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        setSearchOpen(true);
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
   }, []);
 
   return (
@@ -95,6 +109,7 @@ export default function Navbar() {
           {/* CTA */}
           <div className="hidden items-center gap-3 lg:flex">
             <button
+              onClick={() => setSearchOpen(true)}
               className="p-2 text-navy-600 hover:text-navy-900"
               aria-label="Search"
             >
@@ -108,14 +123,23 @@ export default function Navbar() {
             </Link>
           </div>
 
-          {/* Mobile toggle */}
-          <button
-            onClick={() => setOpen(!open)}
-            className="p-2 text-navy-800 lg:hidden"
-            aria-label="Toggle menu"
-          >
-            {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-          </button>
+          {/* Mobile controls */}
+          <div className="flex items-center lg:hidden">
+            <button
+              onClick={() => setSearchOpen(true)}
+              className="p-2 text-navy-800"
+              aria-label="Search"
+            >
+              <Search className="h-5 w-5" />
+            </button>
+            <button
+              onClick={() => setOpen(!open)}
+              className="p-2 text-navy-800"
+              aria-label="Toggle menu"
+            >
+              {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            </button>
+          </div>
         </nav>
 
         {/* Mobile menu */}
@@ -145,6 +169,8 @@ export default function Navbar() {
           </div>
         )}
       </header>
+
+      <SearchModal open={searchOpen} onClose={() => setSearchOpen(false)} />
     </>
   );
 }
