@@ -19,41 +19,49 @@ import {
 const categories = [
   {
     name: 'Patient Monitoring',
+    slug: 'patient-monitoring',
     desc: 'Vital signs monitors, dopplers, and continuous monitoring solutions.',
     icon: Activity,
   },
   {
     name: 'Cardio Diagnostics',
+    slug: 'cardio-diagnostics',
     desc: 'ECG machines, stethoscopes, and cardiac diagnostic equipment.',
     icon: Heart,
   },
   {
     name: 'OB & GYN',
+    slug: 'ob-gyn',
     desc: "Examination tables, fetal monitors, and women's health equipment.",
     icon: Baby,
   },
   {
     name: 'Exam Room Furniture',
+    slug: 'exam-room-furniture',
     desc: 'Examination tables, stools, mayo stands, and clinic furniture.',
     icon: Armchair,
   },
   {
     name: 'Ultrasounds',
+    slug: 'ultrasounds',
     desc: 'Diagnostic ultrasound systems for clinics and specialty practices.',
     icon: Scan,
   },
   {
     name: 'Riester',
+    slug: 'riester',
     desc: 'Premium German-engineered diagnostic instruments and accessories.',
     icon: Stethoscope,
   },
   {
     name: 'Animal Care',
+    slug: 'animal-care',
     desc: 'Veterinary equipment and supplies for animal health professionals.',
     icon: PawPrint,
   },
   {
     name: 'Others',
+    slug: 'others',
     desc: 'Specialty products, accessories, and additional medical supplies.',
     icon: Package,
   },
@@ -184,7 +192,7 @@ export default function HomePage() {
               return (
                 <Link
                   key={c.name}
-                  href="/products"
+                  href={`/products?category=${c.slug}`}
                   className="group flex flex-col items-center justify-center gap-5 rounded-lg bg-navy-800 px-6 py-10 text-center transition-all hover:-translate-y-0.5 hover:bg-navy-700 hover:shadow-card-hover"
                 >
                   <div className="flex h-16 w-16 items-center justify-center rounded-xl bg-white/10 ring-1 ring-white/20 transition-colors group-hover:bg-white/20">

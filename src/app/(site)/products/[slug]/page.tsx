@@ -61,7 +61,13 @@ export default async function ProductDetailPage({ params }: PageProps) {
 
   if (!product) notFound();
 
-  const contactHref = `/contact?product=${encodeURIComponent(product.slug)}`;
+  const contactParams = (intent: "quote" | "info") => {
+    const p = new URLSearchParams({ intent, product: product.name });
+    if (product.model_code) p.set("code", product.model_code);
+    return `/contact?${p.toString()}`;
+  };
+  const quoteHref = contactParams("quote");
+  const infoHref = contactParams("info");
 
   return (
     <>
@@ -137,11 +143,11 @@ export default async function ProductDetailPage({ params }: PageProps) {
             )}
 
             <div className="mt-8 flex flex-col gap-3 sm:max-w-sm">
-              <Link href={contactHref} className="btn-primary">
+              <Link href={quoteHref} className="btn-primary">
                 Request a Quote
                 <ArrowRight className="h-4 w-4" />
               </Link>
-              <Link href={contactHref} className="btn-ghost">
+              <Link href={infoHref} className="btn-ghost">
                 Request More Information
               </Link>
             </div>
@@ -173,7 +179,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
             Our team can walk you through specs, configurations, and pricing.
           </p>
           <div className="mt-8 flex justify-center">
-            <Link href={contactHref} className="btn-light">
+            <Link href={quoteHref} className="btn-light">
               Contact Us
               <ArrowRight className="h-4 w-4" />
             </Link>

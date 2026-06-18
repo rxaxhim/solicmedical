@@ -2,10 +2,17 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { ImageOff } from "lucide-react";
+import Link from "next/link";
+import { ImageOff, ArrowRight } from "lucide-react";
 import type { Accessory } from "@/lib/products";
 import ProductModal from "./ProductModal";
 import Markdown from "./Markdown";
+
+function contactHref(intent: "quote" | "info", a: Accessory): string {
+  const p = new URLSearchParams({ intent, product: a.name });
+  if (a.product_code) p.set("code", a.product_code);
+  return `/contact?${p.toString()}`;
+}
 
 const INITIAL_VISIBLE = 12;
 
@@ -118,6 +125,16 @@ export default function AccessoryGrid({
                 <Markdown>{selected.description}</Markdown>
               </div>
             )}
+
+            <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+              <Link href={contactHref("quote", selected)} className="btn-primary flex-1">
+                Request a Quote
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+              <Link href={contactHref("info", selected)} className="btn-ghost flex-1">
+                Request More Information
+              </Link>
+            </div>
           </div>
         )}
       </ProductModal>
