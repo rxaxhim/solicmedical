@@ -2,17 +2,10 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
-import { ImageOff, ArrowRight } from "lucide-react";
+import { ImageOff } from "lucide-react";
 import type { Accessory } from "@/lib/products";
 import ProductModal from "./ProductModal";
 import Markdown from "./Markdown";
-
-function contactHref(intent: "quote" | "info", a: Accessory): string {
-  const p = new URLSearchParams({ intent, product: a.name });
-  if (a.product_code) p.set("code", a.product_code);
-  return `/contact?${p.toString()}`;
-}
 
 const INITIAL_VISIBLE = 12;
 
@@ -37,13 +30,13 @@ export default function AccessoryGrid({
 
   return (
     <>
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5">
+      <div className="grid grid-cols-3 gap-2.5 sm:grid-cols-4 md:grid-cols-5 xl:grid-cols-6">
         {visible.map((a) => (
           <button
             key={a.id}
             type="button"
             onClick={() => setSelected(a)}
-            className="group flex flex-col overflow-hidden rounded-lg border border-border bg-white text-left transition-colors hover:border-navy-400"
+            className="group flex flex-col overflow-hidden rounded-md border border-border bg-white text-left transition-colors hover:border-navy-400"
           >
             <div className="relative aspect-square overflow-hidden bg-muted">
               {a.image_url ? (
@@ -51,21 +44,21 @@ export default function AccessoryGrid({
                   src={a.image_url}
                   alt={a.name}
                   fill
-                  sizes="(max-width: 640px) 50vw, (max-width: 1280px) 25vw, 20vw"
-                  className="object-contain p-3 transition-transform duration-300 group-hover:scale-[1.03]"
+                  sizes="(max-width: 640px) 33vw, (max-width: 1280px) 20vw, 16vw"
+                  className="object-contain p-2 transition-transform duration-300 group-hover:scale-[1.03]"
                 />
               ) : (
                 <div className="flex h-full items-center justify-center text-navy-200">
-                  <ImageOff className="h-7 w-7" strokeWidth={1.5} />
+                  <ImageOff className="h-6 w-6" strokeWidth={1.5} />
                 </div>
               )}
             </div>
-            <div className="p-3">
-              <p className="text-sm font-semibold leading-snug text-navy-900 group-hover:text-navy-700">
+            <div className="p-2.5">
+              <p className="line-clamp-2 text-xs font-semibold leading-snug text-navy-900 group-hover:text-navy-700">
                 {a.name}
               </p>
               {a.product_code && (
-                <p className="mt-0.5 text-xs text-navy-400">{a.product_code}</p>
+                <p className="mt-0.5 text-[11px] text-navy-400">{a.product_code}</p>
               )}
             </div>
           </button>
@@ -125,16 +118,6 @@ export default function AccessoryGrid({
                 <Markdown>{selected.description}</Markdown>
               </div>
             )}
-
-            <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-              <Link href={contactHref("quote", selected)} className="btn-primary flex-1">
-                Request a Quote
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-              <Link href={contactHref("info", selected)} className="btn-ghost flex-1">
-                Request More Information
-              </Link>
-            </div>
           </div>
         )}
       </ProductModal>

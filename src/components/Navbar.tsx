@@ -119,7 +119,7 @@ export default function Navbar() {
               href="/contact"
               className="inline-flex items-center gap-2 rounded-md bg-navy-800 px-5 py-2.5 text-xs font-semibold text-white transition-colors hover:bg-navy-700"
             >
-              Request a Quote
+              Contact Us
             </Link>
           </div>
 
@@ -163,7 +163,7 @@ export default function Navbar() {
                 onClick={() => setOpen(false)}
                 className="btn-primary mt-3"
               >
-                Request a Quote
+                Contact Us
               </Link>
             </ul>
           </div>

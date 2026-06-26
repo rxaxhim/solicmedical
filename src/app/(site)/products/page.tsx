@@ -145,7 +145,7 @@ export default async function ProductsPage() {
           </p>
           <div className="mt-8 flex justify-center">
             <Link href="/contact" className="btn-light">
-              Request a Quote
+              Contact Us
               <ArrowRight className="h-4 w-4" />
             </Link>
           </div>

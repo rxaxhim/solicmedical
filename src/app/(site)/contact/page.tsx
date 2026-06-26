@@ -12,19 +12,16 @@ import {
   Check,
 } from 'lucide-react';
 
-// Maps the ?intent= param from product/accessory buttons to a Subject option.
+// Maps the ?intent= param from product buttons to a Subject option.
 function subjectFromIntent(intent: string | null): string {
-  if (intent === 'quote') return 'Request a Quote';
-  if (intent === 'info') return 'Product Question';
+  if (intent === 'info' || intent === 'quote') return 'Product Question';
   return 'General Inquiry';
 }
 
 function buildMessage(intent: string | null, product: string, code: string) {
   if (!product) return '';
   const ref = code ? `${product} (model ${code})` : product;
-  return intent === 'info'
-    ? `I would like more information about the ${ref}.`
-    : `I would like to request a quote for the ${ref}.`;
+  return `I would like more information about the ${ref}.`;
 }
 
 function ContactPage() {
@@ -234,7 +231,6 @@ function ContactPage() {
                         className="mt-2 w-full rounded-md border border-border bg-white px-4 py-3 text-sm text-navy-900 transition-colors focus:border-navy-800 focus:outline-none focus:ring-2 focus:ring-navy-100"
                       >
                         <option>General Inquiry</option>
-                        <option>Request a Quote</option>
                         <option>Product Question</option>
                         <option>Technical Support</option>
                         <option>Partnership / Wholesale</option>

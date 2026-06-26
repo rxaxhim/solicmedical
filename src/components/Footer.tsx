@@ -24,7 +24,7 @@ const groups = [
   {
     title: 'Resources',
     items: [
-      { label: 'Request a Quote', href: '/contact' },
+      { label: 'Contact Us', href: '/contact' },
       { label: 'Product Manuals', href: '/support' },
       { label: 'Warranty Information', href: '/support' },
     ],

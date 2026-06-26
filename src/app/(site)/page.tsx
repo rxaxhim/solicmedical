@@ -9,12 +9,12 @@ import {
   Activity,
   Heart,
   Baby,
-  Armchair,
-  Scan,
+  BedDouble,
   Stethoscope,
   PawPrint,
   Package,
 } from 'lucide-react';
+import UltrasoundProbe from '@/components/icons/UltrasoundProbe';
 
 const categories = [
   {
@@ -39,13 +39,13 @@ const categories = [
     name: 'Exam Room Furniture',
     slug: 'exam-room-furniture',
     desc: 'Examination tables, stools, mayo stands, and clinic furniture.',
-    icon: Armchair,
+    icon: BedDouble,
   },
   {
     name: 'Ultrasounds',
     slug: 'ultrasounds',
     desc: 'Diagnostic ultrasound systems for clinics and specialty practices.',
-    icon: Scan,
+    icon: UltrasoundProbe,
   },
   {
     name: 'Riester',
@@ -74,8 +74,8 @@ export default function HomePage() {
       <section className="relative bg-navy-900 text-white">
         <div className="absolute inset-0">
           <Image
-            src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=2000&q=80&auto=format&fit=crop"
-            alt="Medical professionals in a clinical setting"
+            src="https://images.unsplash.com/photo-1538108149393-fbbd81895907?w=2000&q=80&auto=format&fit=crop"
+            alt="Clinician using patient monitoring equipment in a clinical setting"
             fill
             priority
             className="object-cover opacity-40"
@@ -100,7 +100,7 @@ export default function HomePage() {
                 <ArrowRight className="h-4 w-4" />
               </Link>
               <Link href="/contact" className="btn-ghost-light">
-                Request a Quote
+                Contact Us
               </Link>
             </div>
           </div>
@@ -348,7 +348,7 @@ export default function HomePage() {
             </div>
             <div className="flex flex-wrap gap-3 lg:justify-end">
               <Link href="/contact" className="btn-light">
-                Request a Quote
+                Contact Us
                 <ArrowRight className="h-4 w-4" />
               </Link>
               <a href="tel:+14167408885" className="btn-ghost-light">

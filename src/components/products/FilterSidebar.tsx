@@ -103,13 +103,14 @@ function SidebarContent(props: FilterSidebarProps) {
     onClearAll,
   } = props;
 
-  // When categories are selected, narrow the subcategory list to their children.
+  // Subcategories only appear once one or more categories are selected, scoped
+  // to the children of those categories.
   const catIdToSlug = new Map(categories.map((c) => [c.id, c.slug]));
   const visibleSubcategories = selectedCategories.length
     ? subcategories.filter((s) =>
         selectedCategories.includes(catIdToSlug.get(s.category_id) ?? ""),
       )
-    : subcategories;
+    : [];
 
   return (
     <div>

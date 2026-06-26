@@ -61,13 +61,9 @@ export default async function ProductDetailPage({ params }: PageProps) {
 
   if (!product) notFound();
 
-  const contactParams = (intent: "quote" | "info") => {
-    const p = new URLSearchParams({ intent, product: product.name });
-    if (product.model_code) p.set("code", product.model_code);
-    return `/contact?${p.toString()}`;
-  };
-  const quoteHref = contactParams("quote");
-  const infoHref = contactParams("info");
+  const infoParams = new URLSearchParams({ intent: "info", product: product.name });
+  if (product.model_code) infoParams.set("code", product.model_code);
+  const infoHref = `/contact?${infoParams.toString()}`;
 
   return (
     <>
@@ -113,15 +109,15 @@ export default async function ProductDetailPage({ params }: PageProps) {
 
       {/* ── Hero: gallery + info ──────────────────────────────────── */}
       <section className="bg-white py-12 lg:py-16">
-        <div className="container-x grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-14">
-          <div className="lg:col-span-7">
+        <div className="container-x grid grid-cols-1 gap-10 lg:grid-cols-12 lg:items-center lg:gap-14">
+          <div className="lg:col-span-5">
             <ProductGallery
               images={product.images}
               productName={product.name}
             />
           </div>
 
-          <div className="lg:col-span-5">
+          <div className="lg:col-span-7">
             {product.brand && (
               <p className="text-xs font-semibold uppercase tracking-[0.14em] text-accent-600">
                 {product.brand}
@@ -142,13 +138,13 @@ export default async function ProductDetailPage({ params }: PageProps) {
               </p>
             )}
 
-            <div className="mt-8 flex flex-col gap-3 sm:max-w-sm">
-              <Link href={quoteHref} className="btn-primary">
-                Request a Quote
+            <div className="mt-8 flex flex-col gap-3 sm:max-w-md">
+              <Link href={infoHref} className="btn-primary">
+                Request More Information
                 <ArrowRight className="h-4 w-4" />
               </Link>
-              <Link href={infoHref} className="btn-ghost">
-                Request More Information
+              <Link href="/contact" className="btn-ghost">
+                Contact Us
               </Link>
             </div>
           </div>
@@ -179,7 +175,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
             Our team can walk you through specs, configurations, and pricing.
           </p>
           <div className="mt-8 flex justify-center">
-            <Link href={quoteHref} className="btn-light">
+            <Link href={infoHref} className="btn-light">
               Contact Us
               <ArrowRight className="h-4 w-4" />
             </Link>
