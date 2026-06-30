@@ -7,6 +7,7 @@ import {
   fetchCategories,
   fetchSubcategories,
   fetchBrands,
+  fetchAccessoryCategories,
 } from "@/lib/products";
 import ProductForm from "@/components/admin/ProductForm";
 import ImagesManager from "@/components/admin/ImagesManager";
@@ -28,14 +29,21 @@ interface PageProps {
 export default async function EditProductPage({ params }: PageProps) {
   const { slug } = await params;
 
-  const [product, categories, subcategories, brands, allProductsRes] =
-    await Promise.all([
-      fetchProductDetail(supabasePublic, slug),
-      fetchCategories(supabasePublic),
-      fetchSubcategories(supabasePublic),
-      fetchBrands(supabasePublic),
-      supabasePublic.from("products").select("id, name, slug").order("name"),
-    ]);
+  const [
+    product,
+    categories,
+    subcategories,
+    brands,
+    accessoryCategories,
+    allProductsRes,
+  ] = await Promise.all([
+    fetchProductDetail(supabasePublic, slug),
+    fetchCategories(supabasePublic),
+    fetchSubcategories(supabasePublic),
+    fetchBrands(supabasePublic),
+    fetchAccessoryCategories(supabasePublic),
+    supabasePublic.from("products").select("id, name, slug").order("name"),
+  ]);
 
   if (!product) notFound();
 
@@ -132,6 +140,7 @@ export default async function EditProductPage({ params }: PageProps) {
         productId={product.id}
         productSlug={product.slug}
         initial={product.accessories}
+        accessoryCategories={accessoryCategories}
       />
 
       <RelatedManager

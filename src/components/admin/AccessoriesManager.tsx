@@ -6,7 +6,11 @@ import { ImageOff, Plus, RefreshCw, Trash2 } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import { uploadFile, BUCKETS } from "@/lib/admin/storage";
 import { revalidateCatalogue } from "@/app/admin/actions";
-import type { Accessory } from "@/lib/products";
+import {
+  createAccessoryCategory,
+  type Accessory,
+  type AccessoryCategoryOption,
+} from "@/lib/products";
 import AdminSection from "./AdminSection";
 import MarkdownField from "./MarkdownField";
 
@@ -14,21 +18,45 @@ export default function AccessoriesManager({
   productId,
   productSlug,
   initial,
+  accessoryCategories,
 }: {
   productId: string;
   productSlug: string;
   initial: Accessory[];
+  accessoryCategories: AccessoryCategoryOption[];
 }) {
   const [items, setItems] = useState<Accessory[]>(initial);
+  const [cats, setCats] = useState<AccessoryCategoryOption[]>(accessoryCategories);
   const [name, setName] = useState("");
   const [productCode, setProductCode] = useState("");
   const [description, setDescription] = useState("");
+  const [addCatId, setAddCatId] = useState("");
+  const [creatingCat, setCreatingCat] = useState(false);
+  const [newCatName, setNewCatName] = useState("");
+  const [catBusy, setCatBusy] = useState(false);
   const [busy, setBusy] = useState(false);
   const [savingId, setSavingId] = useState<string | null>(null);
   const [replacingId, setReplacingId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
   const replaceRefs = useRef<Record<string, HTMLInputElement | null>>({});
+
+  async function createCategory() {
+    if (!newCatName.trim()) return;
+    setCatBusy(true);
+    setError(null);
+    try {
+      const created = await createAccessoryCategory(supabase, newCatName.trim());
+      setCats((c) => [...c, created]);
+      setAddCatId(created.id);
+      setNewCatName("");
+      setCreatingCat(false);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to create category.");
+    } finally {
+      setCatBusy(false);
+    }
+  }
 
   async function add(e: React.FormEvent) {
     e.preventDefault();
@@ -41,9 +69,8 @@ export default function AccessoriesManager({
     try {
       let imageUrl: string | null = null;
       const file = fileRef.current?.files?.[0];
-      if (file) {
-        imageUrl = await uploadFile(BUCKETS.productImages, productId, file);
-      }
+      if (file) imageUrl = await uploadFile(BUCKETS.productImages, productId, file);
+
       const { data, error } = await supabase
         .from("accessories")
         .insert({
@@ -52,15 +79,34 @@ export default function AccessoriesManager({
           product_code: productCode.trim() || null,
           description: description.trim() || null,
           image_url: imageUrl,
+          accessory_category_id: addCatId || null,
           display_order: items.length,
         })
-        .select("id, name, product_code, description, image_url, display_order")
+        .select(
+          "id, name, product_code, description, image_url, accessory_category_id, display_order",
+        )
         .single();
       if (error) throw error;
-      setItems((it) => [...it, data as Accessory]);
+
+      const c = cats.find((x) => x.id === addCatId) ?? null;
+      setItems((it) => [
+        ...it,
+        {
+          id: data.id,
+          name: data.name,
+          product_code: data.product_code,
+          description: data.description,
+          image_url: data.image_url,
+          display_order: data.display_order,
+          category_id: data.accessory_category_id,
+          category_name: c?.name ?? null,
+          category_slug: c?.slug ?? null,
+        },
+      ]);
       setName("");
       setProductCode("");
       setDescription("");
+      setAddCatId("");
       if (fileRef.current) fileRef.current.value = "";
       await revalidateCatalogue(productSlug);
     } catch (err) {
@@ -74,6 +120,15 @@ export default function AccessoriesManager({
     setItems((it) => it.map((i) => (i.id === id ? { ...i, ...fields } : i)));
   }
 
+  function editCategory(id: string, catId: string) {
+    const c = cats.find((x) => x.id === catId) ?? null;
+    edit(id, {
+      category_id: catId || null,
+      category_name: c?.name ?? null,
+      category_slug: c?.slug ?? null,
+    });
+  }
+
   async function save(item: Accessory) {
     setSavingId(item.id);
     setError(null);
@@ -83,6 +138,7 @@ export default function AccessoriesManager({
         name: item.name,
         product_code: item.product_code,
         description: item.description,
+        accessory_category_id: item.category_id,
       })
       .eq("id", item.id);
     setSavingId(null);
@@ -120,8 +176,22 @@ export default function AccessoriesManager({
     await revalidateCatalogue(productSlug);
   }
 
+  const catOptions = (
+    <>
+      <option value="">— No category —</option>
+      {cats.map((c) => (
+        <option key={c.id} value={c.id}>
+          {c.name}
+        </option>
+      ))}
+    </>
+  );
+
   return (
-    <AdminSection title="Parts & Accessories">
+    <AdminSection
+      title="Parts & Accessories"
+      description="Each accessory belongs to a category; on the product page visitors pick a category to view its accessories."
+    >
       {error && (
         <p className="mb-4 rounded-md bg-accent-50 px-3 py-2 text-sm text-accent-700">
           {error}
@@ -186,6 +256,13 @@ export default function AccessoriesManager({
                   className="input"
                 />
               </div>
+              <select
+                value={a.category_id ?? ""}
+                onChange={(e) => editCategory(a.id, e.target.value)}
+                className="input"
+              >
+                {catOptions}
+              </select>
               <MarkdownField
                 rows={2}
                 value={a.description ?? ""}
@@ -233,6 +310,60 @@ export default function AccessoriesManager({
             className="input"
           />
         </div>
+
+        <div>
+          <select
+            value={addCatId}
+            onChange={(e) => setAddCatId(e.target.value)}
+            className="input"
+          >
+            {catOptions}
+          </select>
+          {creatingCat ? (
+            <div className="mt-2 flex gap-2">
+              <input
+                value={newCatName}
+                onChange={(e) => setNewCatName(e.target.value)}
+                placeholder="New category name"
+                className="input"
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault();
+                    createCategory();
+                  }
+                }}
+              />
+              <button
+                type="button"
+                onClick={createCategory}
+                disabled={catBusy || !newCatName.trim()}
+                className="btn-ghost flex-none px-3 py-2 text-sm disabled:opacity-60"
+              >
+                {catBusy ? "Adding…" : "Add"}
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setCreatingCat(false);
+                  setNewCatName("");
+                }}
+                className="flex-none px-2 text-sm text-navy-500 hover:text-navy-800"
+              >
+                Cancel
+              </button>
+            </div>
+          ) : (
+            <button
+              type="button"
+              onClick={() => setCreatingCat(true)}
+              className="mt-2 inline-flex items-center gap-1 text-sm font-medium text-navy-600 hover:text-navy-900"
+            >
+              <Plus className="h-3.5 w-3.5" />
+              New category
+            </button>
+          )}
+        </div>
+
         <MarkdownField
           rows={2}
           value={description}

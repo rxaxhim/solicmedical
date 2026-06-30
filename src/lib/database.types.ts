@@ -328,6 +328,7 @@ export type Database = {
           product_code: string | null;
           description: string | null;
           image_url: string | null;
+          accessory_category_id: string | null;
           display_order: number;
           created_at: string;
         };
@@ -338,6 +339,7 @@ export type Database = {
           product_code?: string | null;
           description?: string | null;
           image_url?: string | null;
+          accessory_category_id?: string | null;
           display_order?: number;
           created_at?: string;
         };
@@ -348,6 +350,7 @@ export type Database = {
           product_code?: string | null;
           description?: string | null;
           image_url?: string | null;
+          accessory_category_id?: string | null;
           display_order?: number;
           created_at?: string;
         };
@@ -358,7 +361,40 @@ export type Database = {
             referencedRelation: "products";
             referencedColumns: ["id"];
           },
+          {
+            foreignKeyName: "accessories_accessory_category_id_fkey";
+            columns: ["accessory_category_id"];
+            referencedRelation: "accessory_categories";
+            referencedColumns: ["id"];
+          },
         ];
+      };
+      accessory_categories: {
+        Row: {
+          id: string;
+          name: string;
+          slug: string;
+          display_order: number;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          name: string;
+          slug: string;
+          display_order?: number;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          name?: string;
+          slug?: string;
+          display_order?: number;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
       };
       related_products: {
         Row: {

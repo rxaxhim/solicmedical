@@ -131,10 +131,51 @@ function overview(p) {
   return parts.join("\n\n").trim();
 }
 
+// --- Accessory categories (normalize typos / near-duplicates) ---------------
+const ACC_CAT_NORMALIZE = {
+  NIPB: "NIBP",
+  Transducer: "Transducers",
+  "ECG Cable & Accessories": "ECG Cables",
+  "ECG Cables & Accessories": "ECG Cables",
+  "Data Maganement": "Data Management",
+  Others: "Other Accessories",
+  Accessories: "Other Accessories",
+  Trolley: "Trolleys & Bags",
+};
+const slugify = (s) =>
+  String(s).toLowerCase().trim().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+const normCat = (raw) => {
+  const t = (raw || "Other Accessories").trim();
+  return ACC_CAT_NORMALIZE[t] || t;
+};
+
+// Collect distinct accessory categories in order of first appearance.
+const accCats = [];
+const accCatSlugs = new Map(); // name -> slug
+for (const p of data) {
+  for (const g of p.accessories || []) {
+    const name = normCat(g.subcategory);
+    if (!accCatSlugs.has(name)) {
+      const slug = slugify(name);
+      accCatSlugs.set(name, slug);
+      accCats.push({ name, slug });
+    }
+  }
+}
+
 const out = [];
 out.push("-- Auto-generated from products_full.json. Seeds 77 products.");
-out.push("-- Requires categories_reset.sql to have been run first.");
+out.push("-- Requires categories_reset.sql and migration 0004 to have run first.");
 out.push("begin;");
+out.push("");
+out.push("-- Accessory categories (reusable global list).");
+out.push(
+  "insert into public.accessory_categories (name, slug, display_order) values\n" +
+    accCats
+      .map((c, i) => `  (${q(c.name)}, ${q(c.slug)}, ${i})`)
+      .join(",\n") +
+    "\non conflict (slug) do nothing;",
+);
 out.push("");
 out.push("delete from public.products;");
 out.push("");
@@ -202,12 +243,15 @@ for (const p of data) {
 
   let accOrder = 0;
   for (const g of p.accessories || []) {
-    const ctx = [g.subcategory, g.note].filter(Boolean).join(" — ") || null;
+    const catName = normCat(g.subcategory);
+    const catSlug = accCatSlugs.get(catName);
+    const catSub = `(select id from public.accessory_categories where slug=${q(catSlug)})`;
+    const note = g.note && g.note.trim() ? g.note.trim() : null;
     for (const it of g.items || []) {
       const aname = (it.description && it.description.trim()) || it.code || "Accessory";
       out.push(
-        `insert into public.accessories (product_id, name, product_code, description, image_url, display_order) ` +
-          `values (${pid}, ${q(clip(aname, 300))}, ${qn(it.code)}, ${qn(ctx)}, null, ${accOrder++});`,
+        `insert into public.accessories (product_id, name, product_code, description, image_url, accessory_category_id, display_order) ` +
+          `values (${pid}, ${q(clip(aname, 300))}, ${qn(it.code)}, ${qn(note)}, null, ${catSub}, ${accOrder++});`,
       );
     }
   }

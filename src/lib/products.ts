@@ -205,6 +205,38 @@ export async function searchProducts(
   });
 }
 
+export async function fetchAccessoryCategories(
+  db: DB,
+): Promise<AccessoryCategoryOption[]> {
+  const { data, error } = await db
+    .from("accessory_categories")
+    .select("id, name, slug, display_order")
+    .order("display_order", { ascending: true })
+    .order("name", { ascending: true });
+  if (error) throw error;
+  return data ?? [];
+}
+
+/** Creates an accessory category; slug derived from name (collision-safe). */
+export async function createAccessoryCategory(
+  db: DB,
+  name: string,
+): Promise<AccessoryCategoryOption> {
+  const base = slugify(name) || "category";
+  for (let attempt = 0; attempt < 5; attempt++) {
+    const slug =
+      attempt === 0 ? base : `${base}-${Math.random().toString(36).slice(2, 6)}`;
+    const { data, error } = await db
+      .from("accessory_categories")
+      .insert({ name: name.trim(), slug })
+      .select("id, name, slug, display_order")
+      .single();
+    if (!error) return data as AccessoryCategoryOption;
+    if (error.code !== "23505") throw error;
+  }
+  throw new Error("Could not generate a unique slug for the accessory category.");
+}
+
 /** Distinct, non-null brands derived from the products table. */
 export async function fetchBrands(db: DB): Promise<BrandOption[]> {
   const { data, error } = await db
@@ -482,7 +514,29 @@ export interface Accessory {
   description: string | null;
   image_url: string | null;
   display_order: number;
+  category_id: string | null;
+  category_name: string | null;
+  category_slug: string | null;
 }
+
+export interface AccessoryCategoryOption {
+  id: string;
+  name: string;
+  slug: string;
+  display_order: number;
+}
+
+/** Shape of an accessories row joined with its category (from PostgREST). */
+type RawAccessoryRow = {
+  id: string;
+  name: string;
+  product_code: string | null;
+  description: string | null;
+  image_url: string | null;
+  display_order: number;
+  accessory_category_id: string | null;
+  accessory_categories: { id: string; name: string; slug: string } | null;
+};
 
 export interface ProductDetail {
   id: string;
@@ -603,7 +657,9 @@ async function fetchProductDetailBy(
       .order("display_order", { ascending: true }),
     db
       .from("accessories")
-      .select("id, name, product_code, description, image_url, display_order")
+      .select(
+        "id, name, product_code, description, image_url, display_order, accessory_category_id, accessory_categories(id, name, slug)",
+      )
       .eq("product_id", productId)
       .order("display_order", { ascending: true }),
     db
@@ -697,7 +753,22 @@ async function fetchProductDetailBy(
     configurations: (configsRes.data ?? []) as ProductConfiguration[],
     documents: (docsRes.data ?? []) as ProductDocument[],
     videos: (videosRes.data ?? []) as ProductVideo[],
-    accessories: (accessoriesRes.data ?? []) as Accessory[],
+    accessories: ((accessoriesRes.data ?? []) as RawAccessoryRow[]).map(
+      (a): Accessory => {
+        const cat = a.accessory_categories ?? null;
+        return {
+          id: a.id,
+          name: a.name,
+          product_code: a.product_code,
+          description: a.description,
+          image_url: a.image_url,
+          display_order: a.display_order,
+          category_id: a.accessory_category_id,
+          category_name: cat?.name ?? null,
+          category_slug: cat?.slug ?? null,
+        };
+      },
+    ),
     related,
   };
 }
