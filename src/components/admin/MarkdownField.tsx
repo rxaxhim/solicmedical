@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import {
   Bold,
   Italic,
@@ -9,7 +9,9 @@ import {
   ListOrdered,
   Heading2,
   Link2,
+  Table as TableIcon,
 } from "lucide-react";
+import TableBuilder from "./TableBuilder";
 
 interface MarkdownFieldProps {
   value: string;
@@ -32,6 +34,30 @@ export default function MarkdownField({
   id,
 }: MarkdownFieldProps) {
   const ref = useRef<HTMLTextAreaElement>(null);
+  const [tableOpen, setTableOpen] = useState(false);
+
+  /**
+   * Inserts a block (e.g. a table) at the cursor, guaranteeing the blank lines
+   * markdown needs around it without piling up extra newlines.
+   */
+  function insertBlock(block: string) {
+    const ta = ref.current;
+    const at = ta ? ta.selectionStart : value.length;
+    const before = value.slice(0, at);
+    const after = value.slice(at);
+
+    const lead = before.length === 0 ? "" : before.endsWith("\n\n") ? "" : before.endsWith("\n") ? "\n" : "\n\n";
+    const trail = after.length === 0 ? "\n" : after.startsWith("\n\n") ? "" : after.startsWith("\n") ? "\n" : "\n\n";
+
+    const next = before + lead + block + trail + after;
+    onChange(next);
+
+    requestAnimationFrame(() => {
+      ta?.focus();
+      const pos = (before + lead + block).length;
+      ta?.setSelectionRange(pos, pos);
+    });
+  }
 
   function wrap(before: string, after: string, fallback: string) {
     const ta = ref.current;
@@ -99,6 +125,15 @@ export default function MarkdownField({
         <button type="button" title="Link" aria-label="Link" className={btn} onClick={() => wrap("[", "](https://)", "link text")}>
           <Link2 className="h-4 w-4" />
         </button>
+        <button
+          type="button"
+          title="Insert table"
+          aria-label="Insert table"
+          className={btn}
+          onClick={() => setTableOpen(true)}
+        >
+          <TableIcon className="h-4 w-4" />
+        </button>
       </div>
       <textarea
         ref={ref}
@@ -108,6 +143,12 @@ export default function MarkdownField({
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
         className="w-full resize-y rounded-b-md px-3 py-2.5 text-sm text-navy-900 placeholder:text-navy-400 focus:outline-none"
+      />
+
+      <TableBuilder
+        open={tableOpen}
+        onClose={() => setTableOpen(false)}
+        onInsert={insertBlock}
       />
     </div>
   );

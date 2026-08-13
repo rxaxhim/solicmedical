@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "aesthetics-static",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "http.server", "5567", "--directory", "C:/Projects/AestheticsByHumaira"],
+      "port": 5567
+    },
+    {
+      "name": "solic-dev",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev"],
+      "port": 3000
+    }
+  ]
+}

@@ -8,7 +8,9 @@ import type { Database } from "./database.types";
 
 export type DB = SupabaseClient<Database>;
 
-export const PAGE_SIZE = 9;
+// 12 divides evenly into the 2/3/4-column responsive grid, so pages never end
+// with a ragged partial row.
+export const PAGE_SIZE = 12;
 
 export type SortOption = "featured" | "name-asc" | "name-desc" | "newest";
 
@@ -498,6 +500,29 @@ export interface ProductDocument {
   pdf_url: string;
   document_type: string;
   display_order: number;
+}
+
+/**
+ * Display labels for the `document_type` values allowed by the DB CHECK
+ * constraint. The stored value stays lowercase ('manual'); only the label
+ * shown to users differs.
+ */
+export const DOCUMENT_TYPES = [
+  "manual",
+  "datasheet",
+  "brochure",
+  "other",
+] as const;
+
+const DOCUMENT_TYPE_LABELS: Record<string, string> = {
+  manual: "User Manual",
+  datasheet: "Datasheet",
+  brochure: "Brochure",
+  other: "Other",
+};
+
+export function documentTypeLabel(type: string): string {
+  return DOCUMENT_TYPE_LABELS[type] ?? type;
 }
 
 export interface ProductVideo {

@@ -94,12 +94,18 @@ export default function AccessoryGrid({
                 )}
               </div>
               <div className="p-2.5">
-                <p className="line-clamp-2 text-xs font-semibold leading-snug text-navy-900 group-hover:text-navy-700">
-                  {a.name}
-                </p>
-                {a.product_code && (
-                  <p className="mt-0.5 text-[11px] text-navy-400">
-                    {a.product_code}
+                {a.product_code ? (
+                  <>
+                    <p className="text-xs font-semibold leading-snug text-navy-900 group-hover:text-navy-700">
+                      {a.product_code}
+                    </p>
+                    <p className="mt-0.5 line-clamp-2 text-[11px] leading-snug text-navy-400">
+                      {a.name}
+                    </p>
+                  </>
+                ) : (
+                  <p className="line-clamp-2 text-xs font-semibold leading-snug text-navy-900 group-hover:text-navy-700">
+                    {a.name}
                   </p>
                 )}
               </div>

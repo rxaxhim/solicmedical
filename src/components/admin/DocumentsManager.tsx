@@ -5,10 +5,12 @@ import { FileText, Trash2, Upload } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import { uploadFile, BUCKETS } from "@/lib/admin/storage";
 import { revalidateCatalogue } from "@/app/admin/actions";
-import type { ProductDocument } from "@/lib/products";
+import {
+  DOCUMENT_TYPES,
+  documentTypeLabel,
+  type ProductDocument,
+} from "@/lib/products";
 import AdminSection from "./AdminSection";
-
-const DOC_TYPES = ["manual", "datasheet", "brochure", "other"] as const;
 
 export default function DocumentsManager({
   productId,
@@ -103,7 +105,7 @@ export default function DocumentsManager({
                     {d.title}
                   </a>
                   <span className="text-xs uppercase tracking-wide text-navy-400">
-                    {d.document_type}
+                    {documentTypeLabel(d.document_type)}
                   </span>
                 </div>
               </div>
@@ -133,9 +135,9 @@ export default function DocumentsManager({
             onChange={(e) => setDocType(e.target.value)}
             className="input"
           >
-            {DOC_TYPES.map((t) => (
+            {DOCUMENT_TYPES.map((t) => (
               <option key={t} value={t}>
-                {t}
+                {documentTypeLabel(t)}
               </option>
             ))}
           </select>

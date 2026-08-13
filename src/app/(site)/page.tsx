@@ -17,54 +17,14 @@ import {
 import UltrasoundProbe from '@/components/icons/UltrasoundProbe';
 
 const categories = [
-  {
-    name: 'Patient Monitoring',
-    slug: 'patient-monitoring',
-    desc: 'Vital signs monitors, dopplers, and continuous monitoring solutions.',
-    icon: Activity,
-  },
-  {
-    name: 'Cardio Diagnostics',
-    slug: 'cardio-diagnostics',
-    desc: 'ECG machines, stethoscopes, and cardiac diagnostic equipment.',
-    icon: Heart,
-  },
-  {
-    name: 'OB & GYN',
-    slug: 'ob-gyn',
-    desc: "Examination tables, fetal monitors, and women's health equipment.",
-    icon: Baby,
-  },
-  {
-    name: 'Exam Room Furniture',
-    slug: 'exam-room-furniture',
-    desc: 'Examination tables, stools, mayo stands, and clinic furniture.',
-    icon: BedDouble,
-  },
-  {
-    name: 'Ultrasounds',
-    slug: 'ultrasounds',
-    desc: 'Diagnostic ultrasound systems for clinics and specialty practices.',
-    icon: UltrasoundProbe,
-  },
-  {
-    name: 'Riester',
-    slug: 'riester',
-    desc: 'Premium German-engineered diagnostic instruments and accessories.',
-    icon: Stethoscope,
-  },
-  {
-    name: 'Animal Care',
-    slug: 'animal-care',
-    desc: 'Veterinary equipment and supplies for animal health professionals.',
-    icon: PawPrint,
-  },
-  {
-    name: 'Others',
-    slug: 'others',
-    desc: 'Specialty products, accessories, and additional medical supplies.',
-    icon: Package,
-  },
+  { name: 'Patient Monitoring', slug: 'patient-monitoring', icon: Activity },
+  { name: 'Cardio Diagnostics', slug: 'cardio-diagnostics', icon: Heart },
+  { name: 'OB & GYN', slug: 'ob-gyn', icon: Baby },
+  { name: 'Exam Room Furniture', slug: 'exam-room-furniture', icon: BedDouble },
+  { name: 'Ultrasounds', slug: 'ultrasounds', icon: UltrasoundProbe },
+  { name: 'ENT', slug: 'ent', icon: Stethoscope },
+  { name: 'Animal Care', slug: 'animal-care', icon: PawPrint },
+  { name: 'Others', slug: 'others', icon: Package },
 ];
 
 export default function HomePage() {
@@ -83,7 +43,7 @@ export default function HomePage() {
           <div className="absolute inset-0 bg-gradient-to-r from-navy-900 via-navy-900/85 to-navy-900/40" />
         </div>
 
-        <div className="container-x relative py-24 lg:py-36">
+        <div className="container-x relative py-16 lg:py-24">
           <div className="max-w-3xl">
             <p className="eyebrow-light">Medical & Surgical Equipment Supplier</p>
             <h1 className="mt-6 text-display-xl lg:text-display-2xl text-white">
@@ -106,28 +66,56 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* Bottom stat bar */}
-        <div className="relative border-t border-white/10 bg-navy-900/80 backdrop-blur">
-          <div className="container-x grid grid-cols-2 gap-8 py-8 lg:grid-cols-4 text-center">
-            {[
-              { value: '14+', label: 'Years in business' },
-              { value: '500+', label: 'Products in catalogue' },
-              { value: 'Canada-wide', label: 'Coverage' },
-              { value: '2011', label: 'Established' },
-            ].map((s) => (
-              <div key={s.label}>
-                <p className="text-3xl font-bold text-white lg:text-4xl">{s.value}</p>
-                <p className="mt-2 text-xs font-medium uppercase tracking-wider text-navy-200">
-                  {s.label}
-                </p>
-              </div>
-            ))}
+      </section>
+
+      {/* ────────────────────────── CATEGORIES (image grid) ────────────────────────── */}
+      <section className="bg-white pb-14 pt-20 lg:pb-16 lg:pt-28">
+        <div className="container-x">
+          <div className="mb-14 flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
+            <div className="max-w-2xl">
+              <h2 className="text-display-lg text-navy-900">
+                Browse by Category
+              </h2>
+              <p className="mt-4 text-navy-600">
+                Browse our full catalogue across patient monitoring, diagnostics,
+                exam room furniture, and more.
+              </p>
+            </div>
+            <Link
+              href="/products"
+              className="flex items-center gap-2 text-sm font-semibold text-navy-800 hover:text-accent-600"
+            >
+              View all categories
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
+
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {categories.map((c) => {
+              const Icon = c.icon;
+              return (
+                <Link
+                  key={c.name}
+                  href={`/products?category=${c.slug}`}
+                  className="group flex flex-col items-center justify-center gap-4 rounded-xl bg-gradient-to-br from-navy-600 via-navy-800 to-navy-900 px-6 py-9 text-center ring-1 ring-white/10 transition-all duration-300 hover:-translate-y-1 hover:from-navy-500 hover:via-navy-700 hover:to-navy-800 hover:shadow-card-hover hover:ring-accent-500/50"
+                >
+                  <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-white/10 ring-1 ring-white/20 transition-colors group-hover:bg-accent-500/20 group-hover:ring-accent-500/40">
+                    <Icon className="h-11 w-11 text-accent-500" strokeWidth={1.5} />
+                  </div>
+                  <h3 className="text-lg font-semibold text-white">{c.name}</h3>
+                  <div className="flex items-center gap-1.5 text-sm font-semibold text-white/70 transition-colors group-hover:text-accent-500">
+                    Browse now
+                    <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
+                  </div>
+                </Link>
+              );
+            })}
           </div>
         </div>
       </section>
 
       {/* ────────────────────────── INTRO BAND ────────────────────────── */}
-      <section className="bg-white py-20 lg:py-28">
+      <section className="bg-muted py-14 lg:py-16">
         <div className="container-x">
           <div className="grid gap-12 lg:grid-cols-12 lg:items-center">
             <div className="lg:col-span-5">
@@ -163,60 +151,10 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ────────────────────────── CATEGORIES (image grid) ────────────────────────── */}
-      <section className="bg-muted py-20 lg:py-28">
-        <div className="container-x">
-          <div className="mb-14 flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
-            <div className="max-w-2xl">
-              <p className="eyebrow">Browse by Category</p>
-              <h2 className="mt-4 text-display-lg text-navy-900">
-                Equipment for every practice
-              </h2>
-              <p className="mt-4 text-navy-600">
-                Browse our full catalogue across patient monitoring, diagnostics,
-                exam room furniture, and more.
-              </p>
-            </div>
-            <Link
-              href="/products"
-              className="flex items-center gap-2 text-sm font-semibold text-navy-800 hover:text-accent-600"
-            >
-              View all categories
-              <ArrowRight className="h-4 w-4" />
-            </Link>
-          </div>
-
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {categories.map((c) => {
-              const Icon = c.icon;
-              return (
-                <Link
-                  key={c.name}
-                  href={`/products?category=${c.slug}`}
-                  className="group flex flex-col items-center justify-center gap-5 rounded-lg bg-navy-800 px-6 py-10 text-center transition-all hover:-translate-y-0.5 hover:bg-navy-700 hover:shadow-card-hover"
-                >
-                  <div className="flex h-16 w-16 items-center justify-center rounded-xl bg-white/10 ring-1 ring-white/20 transition-colors group-hover:bg-white/20">
-                    <Icon className="h-8 w-8 text-accent-500" strokeWidth={1.5} />
-                  </div>
-                  <div>
-                    <h3 className="text-base font-semibold text-white">{c.name}</h3>
-                    <p className="mt-1.5 text-sm leading-relaxed text-navy-200">{c.desc}</p>
-                  </div>
-                  <div className="flex items-center gap-1.5 text-sm font-semibold text-white/70 transition-colors group-hover:text-white">
-                    Shop now
-                    <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
-                  </div>
-                </Link>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
       {/* ────────────────────────── FULL-BLEED IMAGE BAND ────────────────────────── */}
       <section className="bg-white">
         <div className="grid lg:grid-cols-2">
-          <div className="relative aspect-[4/3] lg:aspect-auto lg:min-h-[600px]">
+          <div className="relative aspect-[4/3] lg:aspect-auto lg:min-h-[440px]">
             <Image
               src="https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?w=1600&q=80&auto=format&fit=crop"
               alt="Medical professionals consulting"
@@ -225,18 +163,18 @@ export default function HomePage() {
               sizes="(max-width: 1024px) 100vw, 50vw"
             />
           </div>
-          <div className="flex items-center bg-white px-6 py-20 lg:px-16 lg:py-24">
+          <div className="flex items-center bg-white px-6 py-12 lg:px-14 lg:py-14">
             <div className="max-w-xl">
               <p className="eyebrow">Why Solic</p>
-              <h2 className="mt-4 text-display-lg text-navy-900">
+              <h2 className="mt-3 text-display-md text-navy-900">
                 Built on trust. Backed by service.
               </h2>
-              <p className="mt-6 text-lg text-navy-600">
+              <p className="mt-4 text-navy-600">
                 In a market full of generic suppliers, we set ourselves apart
                 with personal service, deep product knowledge, and a commitment
                 to standing behind every order we ship.
               </p>
-              <ul className="mt-8 space-y-4">
+              <ul className="mt-6 space-y-3">
                 {[
                   {
                     title: 'Real people, real answers',
@@ -260,7 +198,7 @@ export default function HomePage() {
                   </li>
                 ))}
               </ul>
-              <div className="mt-10">
+              <div className="mt-7">
                 <Link href="/about" className="btn-primary">
                   Learn more about us
                   <ArrowRight className="h-4 w-4" />
@@ -274,18 +212,18 @@ export default function HomePage() {
       {/* ────────────────────────── REVERSED FULL-BLEED IMAGE BAND ────────────────────────── */}
       <section className="bg-muted">
         <div className="grid lg:grid-cols-2">
-          <div className="order-2 flex items-center bg-muted px-6 py-20 lg:order-1 lg:px-16 lg:py-24">
+          <div className="order-2 flex items-center bg-muted px-6 py-12 lg:order-1 lg:px-14 lg:py-14">
             <div className="max-w-xl">
               <p className="eyebrow">Technical Support</p>
-              <h2 className="mt-4 text-display-lg text-navy-900">
+              <h2 className="mt-3 text-display-md text-navy-900">
                 Support throughout the equipment lifecycle
               </h2>
-              <p className="mt-6 text-lg text-navy-600">
+              <p className="mt-4 text-navy-600">
                 From installation guidance to replacement parts and warranty
                 claims, our team is here long after your equipment arrives. We
                 stand by every product we supply.
               </p>
-              <div className="mt-8 grid gap-4 sm:grid-cols-2">
+              <div className="mt-6 grid gap-3 sm:grid-cols-2">
                 {[
                   { icon: ShieldCheck, label: 'Warranty support' },
                   { icon: HeadphonesIcon, label: 'Real-person service' },
@@ -303,7 +241,7 @@ export default function HomePage() {
                   </div>
                 ))}
               </div>
-              <div className="mt-10">
+              <div className="mt-7">
                 <Link href="/support" className="btn-primary">
                   Visit Technical Support
                   <ArrowRight className="h-4 w-4" />
@@ -311,7 +249,7 @@ export default function HomePage() {
               </div>
             </div>
           </div>
-          <div className="relative order-1 aspect-[4/3] lg:order-2 lg:aspect-auto lg:min-h-[600px]">
+          <div className="relative order-1 aspect-[4/3] lg:order-2 lg:aspect-auto lg:min-h-[440px]">
             <Image
               src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=1600&q=80&auto=format&fit=crop"
               alt="Healthcare technician supporting equipment"

@@ -12,8 +12,9 @@ import {
   Check,
 } from 'lucide-react';
 
-// Maps the ?intent= param from product buttons to a Subject option.
+// Maps the ?intent= param from product / support links to a Subject option.
 function subjectFromIntent(intent: string | null): string {
+  if (intent === 'support') return 'Technical Support';
   if (intent === 'info' || intent === 'quote') return 'Product Question';
   return 'General Inquiry';
 }
@@ -156,15 +157,6 @@ function ContactPage() {
                 </ul>
               </div>
 
-              <div className="rounded-lg border border-border bg-muted p-7">
-                <p className="text-xs font-semibold uppercase tracking-wider text-accent-600">
-                  Response time
-                </p>
-                <p className="mt-3 text-sm text-navy-700">
-                  We respond to all inquiries within one business day. For
-                  urgent matters, please call us directly.
-                </p>
-              </div>
             </aside>
 
             {/* Form */}
@@ -266,14 +258,11 @@ function ContactPage() {
                     />
                   </div>
 
-                  <div className="flex flex-col-reverse items-start gap-4 pt-2 md:flex-row md:items-center md:justify-between">
-                    <p className="text-xs text-navy-500">
-                      We respond within one business day.
-                    </p>
+                  <div className="pt-2">
                     <button
                       type="submit"
                       disabled={submitted}
-                      className={`inline-flex items-center gap-2 rounded-md px-6 py-3.5 text-sm font-semibold transition-colors ${
+                      className={`inline-flex w-full items-center justify-center gap-2 rounded-md px-6 py-3.5 text-sm font-semibold transition-colors sm:w-auto ${
                         submitted
                           ? 'bg-emerald-600 text-white'
                           : 'bg-navy-800 text-white hover:bg-navy-700'

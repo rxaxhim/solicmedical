@@ -117,8 +117,8 @@ export default function SupportPage() {
               </div>
               <ArrowRight className="h-4 w-4 text-navy-400 transition-transform group-hover:translate-x-0.5" />
             </a>
-            <a
-              href="mailto:support@solicmedical.com"
+            <Link
+              href="/contact?intent=support"
               className="group flex items-center gap-4 rounded-lg border border-border bg-white p-6 transition-all hover:border-navy-300 hover:shadow-card-hover"
             >
               <div className="flex h-12 w-12 flex-none items-center justify-center rounded-md bg-navy-50 text-navy-700">
@@ -129,11 +129,11 @@ export default function SupportPage() {
                   Email
                 </p>
                 <p className="mt-1 font-semibold text-navy-900">
-                  support@solicmedical.com
+                  Send us a message
                 </p>
               </div>
               <ArrowRight className="h-4 w-4 text-navy-400 transition-transform group-hover:translate-x-0.5" />
-            </a>
+            </Link>
             <div className="flex items-center gap-4 rounded-lg border border-border bg-muted p-6">
               <div className="flex h-12 w-12 flex-none items-center justify-center rounded-md bg-navy-50 text-navy-700">
                 <Clock className="h-5 w-5" strokeWidth={1.75} />

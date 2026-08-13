@@ -72,24 +72,19 @@ export default function Navbar() {
       >
         <nav className="container-x flex h-20 items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-3">
-            <div className="relative h-16 w-20">
+          <Link href="/" className="flex items-center gap-2.5">
+            <div className="relative h-[52px] w-[98px]">
               <Image
-                src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/images/logo.png`}
+                src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/images/logo-mark.png`}
                 alt="Solic Medical"
                 fill
                 priority
                 className="object-contain"
               />
             </div>
-            <div className="leading-tight">
-              <span className="block text-lg font-bold tracking-tight text-navy-800">
-                Solic Medical
-              </span>
-              <span className="block text-[10px] font-medium uppercase tracking-[0.15em] text-navy-500">
-                Equipment Supplier
-              </span>
-            </div>
+            <span className="text-2xl font-bold tracking-tight text-navy-800">
+              Solic Medical
+            </span>
           </Link>
 
           {/* Desktop nav */}
@@ -98,7 +93,7 @@ export default function Navbar() {
               <li key={l.href}>
                 <Link
                   href={l.href}
-                  className="px-3 py-2 text-sm font-medium text-navy-700 transition-colors hover:text-navy-900"
+                  className="px-3.5 py-2 text-base font-medium text-navy-700 transition-colors hover:text-accent-600"
                 >
                   {l.label}
                 </Link>
@@ -151,7 +146,7 @@ export default function Navbar() {
                   <Link
                     href={l.href}
                     onClick={() => setOpen(false)}
-                    className="flex items-center justify-between py-3 text-sm font-medium text-navy-800"
+                    className="flex items-center justify-between py-3 text-base font-medium text-navy-800 transition-colors hover:text-accent-600"
                   >
                     {l.label}
                     <ChevronRight className="h-4 w-4 text-navy-400" />

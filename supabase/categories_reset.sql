@@ -19,7 +19,7 @@ insert into public.categories (name, slug, display_order) values
   ('OB & GYN',            'ob-gyn',              3),
   ('Exam Room Furniture', 'exam-room-furniture', 4),
   ('Ultrasounds',         'ultrasounds',         5),
-  ('Riester',             'riester',             6),
+  ('ENT',             'ent',             6),
   ('Others',              'others',              7),
   ('Animal Care',         'animal-care',         8)
 on conflict (slug) do update
@@ -30,7 +30,7 @@ on conflict (slug) do update
 delete from public.categories
 where slug not in (
   'patient-monitoring', 'cardio-diagnostics', 'ob-gyn', 'exam-room-furniture',
-  'ultrasounds', 'riester', 'others', 'animal-care'
+  'ultrasounds', 'ent', 'others', 'animal-care'
 );
 
 -- 3. Replace all subcategories (slug = "<category-slug>-<name-slug>").
@@ -76,13 +76,13 @@ from (values
   ('ultrasounds', 'AX Series',                 'ultrasounds-ax-series',                 2),
   ('ultrasounds', 'Trolleys & Rolling Stands', 'ultrasounds-trolleys-rolling-stands',   3),
 
-  -- Riester
-  ('riester', 'Diagnostic Stations',        'riester-diagnostic-stations',        1),
-  ('riester', 'ENT',                        'riester-ent',                        2),
-  ('riester', 'Blood Pressure Management',  'riester-blood-pressure-management',  3),
-  ('riester', 'Stethoscopes',               'riester-stethoscopes',               4),
-  ('riester', 'Thermometry',                'riester-thermometry',                5),
-  ('riester', 'Medical Lights',             'riester-medical-lights',             6),
+  -- ENT
+  ('ent', 'Diagnostic Stations',        'ent-diagnostic-stations',        1),
+  ('ent', 'ENT',                        'ent-ent',                        2),
+  ('ent', 'Blood Pressure Management',  'ent-blood-pressure-management',  3),
+  ('ent', 'Stethoscopes',               'ent-stethoscopes',               4),
+  ('ent', 'Thermometry',                'ent-thermometry',                5),
+  ('ent', 'Medical Lights',             'ent-medical-lights',             6),
 
   -- Others
   ('others', 'Laryngoscope', 'others-laryngoscope', 1),

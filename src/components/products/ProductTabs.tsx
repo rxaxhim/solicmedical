@@ -126,19 +126,55 @@ export default function ProductTabs(props: ProductTabsProps) {
             hidden={active !== "configurations"}
           >
             {configurations.length > 0 ? (
-              <div className="space-y-8">
-                {configurations.map((c) => (
-                  <div key={c.id}>
-                    <h3 className="text-lg font-semibold text-navy-900">
-                      {c.config_name}
-                    </h3>
-                    {c.config_details && (
-                      <div className="mt-2">
-                        <Markdown>{c.config_details}</Markdown>
-                      </div>
-                    )}
-                  </div>
-                ))}
+              <div className="overflow-hidden rounded-xl border border-border shadow-card">
+                <div className="overflow-x-auto">
+                  <table className="w-full border-collapse text-left text-sm">
+                    <thead>
+                      <tr className="bg-gradient-to-r from-navy-800 to-navy-700">
+                        <th
+                          scope="col"
+                          className="w-px whitespace-nowrap px-5 py-4 text-[11px] font-semibold uppercase tracking-[0.12em] text-white"
+                        >
+                          Model
+                        </th>
+                        <th
+                          scope="col"
+                          className="px-5 py-4 text-[11px] font-semibold uppercase tracking-[0.12em] text-navy-100"
+                        >
+                          Description
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {configurations.map((c, i) => (
+                        <tr
+                          key={c.id}
+                          className={`group/row border-b border-border transition-colors last:border-0 hover:bg-navy-50 hover:shadow-[inset_3px_0_0_0_#EE8826] ${
+                            i % 2 === 1 ? "bg-muted/50" : "bg-white"
+                          }`}
+                        >
+                          <th
+                            scope="row"
+                            className="whitespace-nowrap px-5 py-4 align-top font-normal"
+                          >
+                            <span className="inline-flex rounded-md bg-accent-50 px-2.5 py-1 text-xs font-semibold text-accent-700 ring-1 ring-accent-100 transition-colors group-hover/row:bg-accent-100 group-hover/row:ring-accent-500/40">
+                              {c.config_name}
+                            </span>
+                          </th>
+                          <td className="px-5 py-4 align-top text-navy-700">
+                            {c.config_details ? (
+                              <div className="[&_p]:!mb-0">
+                                <Markdown>{c.config_details}</Markdown>
+                              </div>
+                            ) : (
+                              <span className="text-navy-300">—</span>
+                            )}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               </div>
             ) : (
               <p className="text-navy-600">

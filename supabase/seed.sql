@@ -38,22 +38,22 @@ from (
      'patient-monitoring',  'Welch Allyn', false, 2),
     ('RVS-100 Vitals Monitor',     'rvs-100-vitals-monitor',  'RVS-100',
      'Modular vital signs monitor for clinics.',
-     'patient-monitoring',  'Riester',     false, 3),
+     'patient-monitoring',  'ENT',     false, 3),
     ('CardioPerfect ECG',          'cardioperfect-ecg',       'CP-200',
      'Resting ECG system with PC-based reporting.',
      'cardio-diagnostics',  'Welch Allyn', true,  1),
     ('ri-cardio ECG',              'ri-cardio-ecg',           'RC-1010',
      '12-channel ECG with interpretation.',
-     'cardio-diagnostics',  'Riester',     false, 2),
+     'cardio-diagnostics',  'ENT',     false, 2),
     ('Duplex 2.0 Stethoscope',     'duplex-2-stethoscope',    'DPX-200',
      'Dual-head stethoscope in stainless steel.',
-     'cardio-diagnostics',  'Riester',     false, 3),
+     'cardio-diagnostics',  'ENT',     false, 3),
     ('Exam Table 2000',            'exam-table-2000',         'ET-2000',
      'Power examination table with adjustable height.',
      'exam-room-furniture', 'Welch Allyn', false, 1),
     ('ri-exam Procedure Stool',    'ri-exam-procedure-stool', 'RX-50',
      'Pneumatic procedure stool with backrest.',
-     'exam-room-furniture', 'Riester',     true,  2)
+     'exam-room-furniture', 'ENT',     true,  2)
 ) as v(name, slug, model_code, description, category_slug, brand, featured, display_order)
 join public.categories c on c.slug = v.category_slug
 on conflict (slug) do update
