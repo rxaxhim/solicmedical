@@ -369,6 +369,61 @@ export type Database = {
           },
         ];
       };
+      homepage_hero: {
+        Row: {
+          id: number;
+          enabled: boolean;
+          eyebrow: string | null;
+          heading: string | null;
+          heading_highlight: string | null;
+          subheading: string | null;
+          image_url: string | null;
+          primary_label: string | null;
+          primary_href: string | null;
+          secondary_label: string | null;
+          secondary_href: string | null;
+          featured_product_id: string | null;
+          updated_at: string;
+        };
+        Insert: {
+          id?: number;
+          enabled?: boolean;
+          eyebrow?: string | null;
+          heading?: string | null;
+          heading_highlight?: string | null;
+          subheading?: string | null;
+          image_url?: string | null;
+          primary_label?: string | null;
+          primary_href?: string | null;
+          secondary_label?: string | null;
+          secondary_href?: string | null;
+          featured_product_id?: string | null;
+          updated_at?: string;
+        };
+        Update: {
+          id?: number;
+          enabled?: boolean;
+          eyebrow?: string | null;
+          heading?: string | null;
+          heading_highlight?: string | null;
+          subheading?: string | null;
+          image_url?: string | null;
+          primary_label?: string | null;
+          primary_href?: string | null;
+          secondary_label?: string | null;
+          secondary_href?: string | null;
+          featured_product_id?: string | null;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "homepage_hero_featured_product_id_fkey";
+            columns: ["featured_product_id"];
+            referencedRelation: "products";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
       accessory_categories: {
         Row: {
           id: string;

@@ -15,6 +15,13 @@ import {
   Package,
 } from 'lucide-react';
 import UltrasoundProbe from '@/components/icons/UltrasoundProbe';
+import CustomHero from '@/components/home/CustomHero';
+import { supabasePublic } from '@/lib/supabase-public';
+import { fetchHomepageHero, heroIsUsable } from '@/lib/site';
+
+// The hero is admin-editable, so refresh periodically; the admin also triggers
+// on-demand revalidation after saving.
+export const revalidate = 300;
 
 const categories = [
   { name: 'Patient Monitoring', slug: 'patient-monitoring', icon: Activity },
@@ -27,10 +34,15 @@ const categories = [
   { name: 'Others', slug: 'others', icon: Package },
 ];
 
-export default function HomePage() {
+export default async function HomePage() {
+  const hero = await fetchHomepageHero(supabasePublic);
+
   return (
     <>
-      {/* ────────────────────────── HERO ────────────────────────── */}
+      {/* ── HERO — custom (admin-managed) when enabled, else the default ── */}
+      {heroIsUsable(hero) ? (
+        <CustomHero hero={hero} />
+      ) : (
       <section className="relative bg-navy-900 text-white">
         <div className="absolute inset-0">
           <Image
@@ -67,6 +79,7 @@ export default function HomePage() {
         </div>
 
       </section>
+      )}
 
       {/* ────────────────────────── CATEGORIES (image grid) ────────────────────────── */}
       <section className="bg-white pb-14 pt-20 lg:pb-16 lg:pt-28">

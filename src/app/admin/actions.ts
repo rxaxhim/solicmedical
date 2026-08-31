@@ -20,3 +20,8 @@ export async function revalidateCategories() {
   revalidatePath("/");
   revalidatePath("/products");
 }
+
+/** Refresh the homepage after the hero is edited or toggled. */
+export async function revalidateHome() {
+  revalidatePath("/");
+}
