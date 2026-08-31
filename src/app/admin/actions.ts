@@ -11,3 +11,12 @@ export async function revalidateCatalogue(slug?: string) {
   revalidatePath("/products");
   if (slug) revalidatePath(`/products/${slug}`);
 }
+
+/**
+ * Categories feed the products filters and the homepage tiles, so refresh both
+ * after a category is created, renamed, or removed.
+ */
+export async function revalidateCategories() {
+  revalidatePath("/");
+  revalidatePath("/products");
+}

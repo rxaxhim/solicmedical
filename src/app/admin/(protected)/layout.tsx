@@ -43,12 +43,18 @@ export default async function AdminLayout({
                 </span>
               </span>
             </Link>
-            <nav className="hidden sm:flex">
+            <nav className="hidden items-center gap-6 sm:flex">
               <Link
                 href="/admin"
                 className="text-sm font-medium text-navy-600 hover:text-navy-900"
               >
                 Products
+              </Link>
+              <Link
+                href="/admin/categories"
+                className="text-sm font-medium text-navy-600 hover:text-navy-900"
+              >
+                Categories
               </Link>
             </nav>
           </div>
