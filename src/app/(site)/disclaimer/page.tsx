@@ -87,7 +87,7 @@ export default function DisclaimerPage() {
   return (
     <>
       {/* PAGE HEADER */}
-      <section className="border-b border-border bg-muted py-16 lg:py-20">
+      <section className="border-b border-border bg-muted py-8 lg:py-10">
         <div className="container-x">
           <p className="eyebrow">Legal</p>
           <h1 className="mt-4 text-display-xl text-navy-900">Disclaimer</h1>
@@ -99,7 +99,7 @@ export default function DisclaimerPage() {
       </section>
 
       {/* CONTENT */}
-      <section className="bg-white py-16 lg:py-24">
+      <section className="bg-white py-8 lg:py-10">
         <div className="container-x">
           <div className="mx-auto max-w-3xl">
             <div className="space-y-12">

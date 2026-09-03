@@ -31,7 +31,13 @@ const config: Config = {
         border: '#E4E9F2',
       },
       fontFamily: {
-        sans: ['var(--font-inter)', 'system-ui', '-apple-system', 'sans-serif'],
+        sans: ['var(--font-sans)', 'system-ui', '-apple-system', 'sans-serif'],
+        display: [
+          'var(--font-display)',
+          'var(--font-sans)',
+          'system-ui',
+          'sans-serif',
+        ],
       },
       fontSize: {
         'display-2xl': ['80px', { lineHeight: '1.02', letterSpacing: '-0.025em', fontWeight: '600' }],

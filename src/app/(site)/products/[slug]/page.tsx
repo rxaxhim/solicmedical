@@ -132,8 +132,14 @@ export default async function ProductDetailPage({ params }: PageProps) {
               </p>
             )}
 
+            {product.tagline && (
+              <p className="mt-5 text-xl leading-snug text-navy-800 lg:text-2xl">
+                {product.tagline}
+              </p>
+            )}
+
             {product.description && (
-              <p className="mt-6 text-lg leading-relaxed text-navy-600">
+              <p className="mt-5 leading-relaxed text-navy-600">
                 {product.description}
               </p>
             )}

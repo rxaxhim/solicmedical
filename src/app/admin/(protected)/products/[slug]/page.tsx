@@ -96,6 +96,7 @@ export default async function EditProductPage({ params }: PageProps) {
             name: product.name,
             slug: product.slug,
             model_code: product.model_code ?? "",
+            tagline: product.tagline ?? "",
             description: product.description ?? "",
             category_id: product.category?.id ?? null,
             subcategory_id: product.subcategory?.id ?? null,

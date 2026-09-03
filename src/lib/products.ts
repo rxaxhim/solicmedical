@@ -568,6 +568,7 @@ export interface ProductDetail {
   name: string;
   slug: string;
   model_code: string | null;
+  tagline: string | null;
   description: string | null;
   brand: string | null;
   featured: boolean;
@@ -767,6 +768,7 @@ async function fetchProductDetailBy(
     name: product.name,
     slug: product.slug,
     model_code: product.model_code,
+    tagline: product.tagline,
     description: product.description,
     brand: product.brand,
     featured: product.featured,

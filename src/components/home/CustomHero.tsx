@@ -41,7 +41,7 @@ export default function CustomHero({ hero }: { hero: HomepageHero }) {
         <div className="absolute inset-0 bg-gradient-to-r from-navy-900 via-navy-900/85 to-navy-900/40" />
       </div>
 
-      <div className="container-x relative py-16 lg:py-24">
+      <div className="container-x relative py-10 lg:py-12">
         <div className="max-w-3xl">
           {hero.eyebrow?.trim() && (
             <p className="eyebrow-light">{hero.eyebrow}</p>

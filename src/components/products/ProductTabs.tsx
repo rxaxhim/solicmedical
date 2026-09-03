@@ -101,7 +101,7 @@ export default function ProductTabs(props: ProductTabsProps) {
         </div>
 
         {/* Panels */}
-        <div className="py-16">
+        <div className="pb-12 pt-8">
           {/* Overview */}
           <div
             role="tabpanel"
@@ -133,7 +133,7 @@ export default function ProductTabs(props: ProductTabsProps) {
                       <tr className="bg-gradient-to-r from-navy-800 to-navy-700">
                         <th
                           scope="col"
-                          className="w-px whitespace-nowrap px-5 py-4 text-[11px] font-semibold uppercase tracking-[0.12em] text-white"
+                          className="w-px whitespace-nowrap border-r border-white/15 px-5 py-4 text-[11px] font-semibold uppercase tracking-[0.12em] text-white"
                         >
                           Model
                         </th>
@@ -149,17 +149,15 @@ export default function ProductTabs(props: ProductTabsProps) {
                       {configurations.map((c, i) => (
                         <tr
                           key={c.id}
-                          className={`group/row border-b border-border transition-colors last:border-0 hover:bg-navy-50 hover:shadow-[inset_3px_0_0_0_#EE8826] ${
-                            i % 2 === 1 ? "bg-muted/50" : "bg-white"
+                          className={`border-b border-border transition-colors last:border-0 hover:bg-navy-100 hover:shadow-[inset_3px_0_0_0_#EE8826] ${
+                            i % 2 === 1 ? "bg-navy-50" : "bg-white"
                           }`}
                         >
                           <th
                             scope="row"
-                            className="whitespace-nowrap px-5 py-4 align-top font-normal"
+                            className="whitespace-nowrap border-r border-border px-5 py-4 align-top font-semibold text-navy-900"
                           >
-                            <span className="inline-flex rounded-md bg-accent-50 px-2.5 py-1 text-xs font-semibold text-accent-700 ring-1 ring-accent-100 transition-colors group-hover/row:bg-accent-100 group-hover/row:ring-accent-500/40">
-                              {c.config_name}
-                            </span>
+                            {c.config_name}
                           </th>
                           <td className="px-5 py-4 align-top text-navy-700">
                             {c.config_details ? (

@@ -61,6 +61,7 @@ export type Database = {
           name: string;
           slug: string;
           model_code: string | null;
+          tagline: string | null;
           description: string | null;
           category_id: string | null;
           subcategory_id: string | null;
@@ -75,6 +76,7 @@ export type Database = {
           name: string;
           slug: string;
           model_code?: string | null;
+          tagline?: string | null;
           description?: string | null;
           category_id?: string | null;
           subcategory_id?: string | null;
@@ -89,6 +91,7 @@ export type Database = {
           name?: string;
           slug?: string;
           model_code?: string | null;
+          tagline?: string | null;
           description?: string | null;
           category_id?: string | null;
           subcategory_id?: string | null;

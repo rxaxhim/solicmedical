@@ -68,7 +68,7 @@ function ContactPage() {
           />
           <div className="absolute inset-0 bg-gradient-to-r from-navy-900 via-navy-900/90 to-navy-900/50" />
         </div>
-        <div className="container-x relative py-24 lg:py-32">
+        <div className="container-x relative py-16 lg:py-20">
           <div className="max-w-3xl">
             <p className="eyebrow-light">Contact</p>
             <h1 className="mt-6 text-display-xl lg:text-display-2xl text-white">
@@ -83,7 +83,7 @@ function ContactPage() {
       </section>
 
       {/* MAIN GRID */}
-      <section className="bg-white py-20 lg:py-28">
+      <section className="bg-white py-8 lg:py-10">
         <div className="container-x">
           <div className="grid gap-8 lg:grid-cols-12">
             {/* Contact info */}

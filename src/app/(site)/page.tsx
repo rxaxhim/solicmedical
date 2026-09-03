@@ -55,7 +55,7 @@ export default async function HomePage() {
           <div className="absolute inset-0 bg-gradient-to-r from-navy-900 via-navy-900/85 to-navy-900/40" />
         </div>
 
-        <div className="container-x relative py-16 lg:py-24">
+        <div className="container-x relative py-10 lg:py-12">
           <div className="max-w-3xl">
             <p className="eyebrow-light">Medical & Surgical Equipment Supplier</p>
             <h1 className="mt-6 text-display-xl lg:text-display-2xl text-white">
@@ -82,7 +82,7 @@ export default async function HomePage() {
       )}
 
       {/* ────────────────────────── CATEGORIES (image grid) ────────────────────────── */}
-      <section className="bg-white pb-14 pt-20 lg:pb-16 lg:pt-28">
+      <section className="bg-white pb-8 pt-10 lg:pb-10 lg:pt-14">
         <div className="container-x">
           <div className="mb-14 flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
             <div className="max-w-2xl">
@@ -117,7 +117,7 @@ export default async function HomePage() {
                   </div>
                   <h3 className="text-lg font-semibold text-white">{c.name}</h3>
                   <div className="flex items-center gap-1.5 text-sm font-semibold text-white/70 transition-colors group-hover:text-accent-500">
-                    Browse now
+                    Browse
                     <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
                   </div>
                 </Link>
@@ -128,7 +128,7 @@ export default async function HomePage() {
       </section>
 
       {/* ────────────────────────── INTRO BAND ────────────────────────── */}
-      <section className="bg-muted py-14 lg:py-16">
+      <section className="bg-muted py-8 lg:py-10">
         <div className="container-x">
           <div className="grid gap-12 lg:grid-cols-12 lg:items-center">
             <div className="lg:col-span-5">
@@ -176,7 +176,7 @@ export default async function HomePage() {
               sizes="(max-width: 1024px) 100vw, 50vw"
             />
           </div>
-          <div className="flex items-center bg-white px-6 py-12 lg:px-14 lg:py-14">
+          <div className="flex items-center bg-white px-6 py-8 lg:px-14 lg:py-10">
             <div className="max-w-xl">
               <p className="eyebrow">Why Solic</p>
               <h2 className="mt-3 text-display-md text-navy-900">
@@ -225,7 +225,7 @@ export default async function HomePage() {
       {/* ────────────────────────── REVERSED FULL-BLEED IMAGE BAND ────────────────────────── */}
       <section className="bg-muted">
         <div className="grid lg:grid-cols-2">
-          <div className="order-2 flex items-center bg-muted px-6 py-12 lg:order-1 lg:px-14 lg:py-14">
+          <div className="order-2 flex items-center bg-muted px-6 py-8 lg:order-1 lg:px-14 lg:py-10">
             <div className="max-w-xl">
               <p className="eyebrow">Technical Support</p>
               <h2 className="mt-3 text-display-md text-navy-900">
@@ -285,7 +285,7 @@ export default async function HomePage() {
           />
           <div className="absolute inset-0 bg-gradient-to-r from-navy-900 via-navy-900/90 to-navy-900/60" />
         </div>
-        <div className="container-x relative py-20 lg:py-24">
+        <div className="container-x relative py-10 lg:py-12">
           <div className="grid items-center gap-8 lg:grid-cols-2">
             <div>
               <p className="eyebrow-light">Get in touch</p>

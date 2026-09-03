@@ -82,7 +82,7 @@ export default function Navbar() {
                 className="object-contain"
               />
             </div>
-            <span className="text-2xl font-bold tracking-tight text-navy-800">
+            <span className="font-display text-2xl font-bold tracking-tight text-navy-800">
               Solic Medical
             </span>
           </Link>
@@ -93,7 +93,7 @@ export default function Navbar() {
               <li key={l.href}>
                 <Link
                   href={l.href}
-                  className="px-3.5 py-2 text-base font-medium text-navy-700 transition-colors hover:text-accent-600"
+                  className="px-3.5 py-2 font-display text-base font-medium text-navy-700 transition-colors hover:text-accent-600"
                 >
                   {l.label}
                 </Link>
@@ -112,7 +112,7 @@ export default function Navbar() {
             </button>
             <Link
               href="/contact"
-              className="inline-flex items-center gap-2 rounded-md bg-navy-800 px-5 py-2.5 text-xs font-semibold text-white transition-colors hover:bg-navy-700"
+              className="inline-flex items-center gap-2 rounded-md bg-navy-800 px-5 py-2.5 font-display text-xs font-semibold text-white transition-colors hover:bg-navy-700"
             >
               Contact Us
             </Link>
@@ -146,7 +146,7 @@ export default function Navbar() {
                   <Link
                     href={l.href}
                     onClick={() => setOpen(false)}
-                    className="flex items-center justify-between py-3 text-base font-medium text-navy-800 transition-colors hover:text-accent-600"
+                    className="flex items-center justify-between py-3 font-display text-base font-medium text-navy-800 transition-colors hover:text-accent-600"
                   >
                     {l.label}
                     <ChevronRight className="h-4 w-4 text-navy-400" />

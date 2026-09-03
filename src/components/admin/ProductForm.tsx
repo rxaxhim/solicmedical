@@ -17,6 +17,7 @@ export interface ProductFormValues {
   name: string;
   slug: string;
   model_code: string;
+  tagline: string;
   description: string;
   category_id: string | null;
   subcategory_id: string | null;
@@ -37,6 +38,7 @@ const EMPTY: ProductFormValues = {
   name: "",
   slug: "",
   model_code: "",
+  tagline: "",
   description: "",
   category_id: null,
   subcategory_id: null,
@@ -134,6 +136,7 @@ export default function ProductForm({
       name: values.name.trim(),
       slug: values.slug.trim() || slugify(values.name),
       model_code: values.model_code.trim() || null,
+      tagline: values.tagline.trim() || null,
       description: values.description.trim() || null,
       category_id: values.category_id || null,
       subcategory_id: values.subcategory_id || null,
@@ -330,9 +333,23 @@ export default function ProductForm({
       </Field>
 
       <Field
+        label="Tagline"
+        htmlFor="tagline"
+        hint="One line shown under the product name, larger than the short description."
+      >
+        <textarea
+          id="tagline"
+          rows={2}
+          value={values.tagline}
+          onChange={(e) => set("tagline", e.target.value)}
+          className="input"
+        />
+      </Field>
+
+      <Field
         label="Short description"
         htmlFor="description"
-        hint="Shown on product cards and at the top of the detail page."
+        hint="Shown on product cards and below the tagline on the detail page."
       >
         <textarea
           id="description"

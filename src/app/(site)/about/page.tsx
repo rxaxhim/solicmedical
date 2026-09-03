@@ -47,7 +47,7 @@ export default function AboutPage() {
           />
           <div className="absolute inset-0 bg-gradient-to-r from-navy-900 via-navy-900/90 to-navy-900/50" />
         </div>
-        <div className="container-x relative py-24 lg:py-32">
+        <div className="container-x relative py-16 lg:py-20">
           <div className="max-w-3xl">
             <p className="eyebrow-light">About Solic Medical</p>
             <h1 className="mt-6 text-display-xl lg:text-display-2xl text-white">
@@ -74,7 +74,7 @@ export default function AboutPage() {
               sizes="(max-width: 1024px) 100vw, 50vw"
             />
           </div>
-          <div className="flex items-center bg-white px-6 py-20 lg:px-16 lg:py-24">
+          <div className="flex items-center bg-white px-6 py-8 lg:px-14 lg:py-10">
             <div className="max-w-xl">
               <p className="eyebrow">Our story</p>
               <h2 className="mt-4 text-display-lg text-navy-900">
@@ -106,7 +106,7 @@ export default function AboutPage() {
       </section>
 
       {/* VALUES */}
-      <section className="bg-muted py-20 lg:py-28">
+      <section className="bg-muted py-8 lg:py-10">
         <div className="container-x">
           <div className="mb-14 max-w-2xl">
             <p className="eyebrow">What we stand for</p>
@@ -136,7 +136,7 @@ export default function AboutPage() {
       {/* WHO WE SERVE — TEXT LEFT, IMAGE RIGHT */}
       <section className="bg-white">
         <div className="grid lg:grid-cols-2">
-          <div className="order-2 flex items-center bg-white px-6 py-20 lg:order-1 lg:px-16 lg:py-24">
+          <div className="order-2 flex items-center bg-white px-6 py-8 lg:order-1 lg:px-14 lg:py-10">
             <div className="max-w-xl">
               <p className="eyebrow">Who we serve</p>
               <h2 className="mt-4 text-display-lg text-navy-900">
@@ -179,7 +179,7 @@ export default function AboutPage() {
 
       {/* CTA */}
       <section className="bg-navy-900">
-        <div className="container-x py-20 lg:py-24">
+        <div className="container-x py-10 lg:py-12">
           <div className="grid items-center gap-8 lg:grid-cols-2">
             <div>
               <p className="eyebrow-light">Get in touch</p>

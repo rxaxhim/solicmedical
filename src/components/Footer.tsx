@@ -81,45 +81,50 @@ export default function Footer() {
             </ul>
           </div>
 
-          {groups.map((g) => (
-            <div key={g.title} className="md:col-span-2 lg:col-span-2">
-              <h4 className="text-xs font-semibold uppercase tracking-[0.12em] text-white">
-                {g.title}
-              </h4>
-              <ul className="mt-5 space-y-3">
-                {g.items.map((it) => (
-                  <li key={it.label}>
-                    <Link
-                      href={it.href}
-                      className="text-sm text-navy-200 transition-colors hover:text-white"
-                    >
-                      {it.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+          {/* Link columns — kept in their own grid so they sit closer together */}
+          <div className="md:col-span-8">
+            <div className="grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-4">
+              {groups.map((g) => (
+                <div key={g.title}>
+                  <h4 className="text-xs font-semibold uppercase tracking-[0.12em] text-white">
+                    {g.title}
+                  </h4>
+                  <ul className="mt-5 space-y-3">
+                    {g.items.map((it) => (
+                      <li key={it.label}>
+                        <Link
+                          href={it.href}
+                          className="text-sm text-navy-200 transition-colors hover:text-white"
+                        >
+                          {it.label}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
 
-          {/* Hours block */}
-          <div className="md:col-span-2">
-            <h4 className="text-xs font-semibold uppercase tracking-[0.12em] text-white">
-              Business Hours
-            </h4>
-            <ul className="mt-5 space-y-2 text-sm text-navy-200">
-              <li className="flex justify-between gap-3">
-                <span>Mon–Fri</span>
-                <span className="text-navy-300">9am–5pm</span>
-              </li>
-              <li className="flex justify-between gap-3">
-                <span>Saturday</span>
-                <span className="text-navy-300">Closed</span>
-              </li>
-              <li className="flex justify-between gap-3">
-                <span>Sunday</span>
-                <span className="text-navy-300">Closed</span>
-              </li>
-            </ul>
+              {/* Hours block */}
+              <div>
+                <h4 className="text-xs font-semibold uppercase tracking-[0.12em] text-white">
+                  Business Hours
+                </h4>
+                <ul className="mt-5 space-y-2 text-sm text-navy-200">
+                  <li className="flex justify-between gap-3">
+                    <span>Mon–Fri</span>
+                    <span className="text-navy-300">9am–5pm</span>
+                  </li>
+                  <li className="flex justify-between gap-3">
+                    <span>Saturday</span>
+                    <span className="text-navy-300">Closed</span>
+                  </li>
+                  <li className="flex justify-between gap-3">
+                    <span>Sunday</span>
+                    <span className="text-navy-300">Closed</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
 

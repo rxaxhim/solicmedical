@@ -34,11 +34,13 @@ export default function Markdown({ children }: { children: string }) {
                     w-full border-collapse text-left text-sm
                     [&_thead_tr]:bg-gradient-to-r [&_thead_tr]:from-navy-800 [&_thead_tr]:to-navy-700
                     [&_th]:px-5 [&_th]:py-4 [&_th]:text-[11px] [&_th]:font-semibold [&_th]:uppercase [&_th]:tracking-[0.12em] [&_th]:text-white
+                    [&_thead_th:not(:last-child)]:border-r [&_thead_th:not(:last-child)]:border-white/15
                     [&_td]:border-b [&_td]:border-border [&_td]:px-5 [&_td]:py-4 [&_td]:align-top [&_td]:text-navy-700
+                    [&_tbody_td:not(:last-child)]:border-r [&_tbody_td:not(:last-child)]:border-border
                     [&_tbody_tr:last-child_td]:border-b-0
-                    [&_tbody_tr:nth-child(even)]:bg-muted/50
+                    [&_tbody_tr:nth-child(even)]:bg-navy-50
                     [&_tbody_tr]:transition-colors
-                    [&_tbody_tr:hover]:bg-navy-50
+                    [&_tbody_tr:hover]:bg-navy-100
                   "
                 >
                   {children}
