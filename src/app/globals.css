@@ -40,6 +40,44 @@
   .btn-ghost {
     @apply inline-flex items-center justify-center gap-2 rounded-md font-display border border-navy-200 bg-white px-6 py-3.5 text-sm font-semibold text-navy-800 transition-colors duration-150 hover:border-navy-800 hover:bg-navy-50;
   }
+  /* WYSIWYG editor content — shows admins formatted text, not markup. */
+  .prose-admin {
+    @apply text-sm leading-relaxed text-navy-800;
+  }
+  .prose-admin p {
+    @apply mb-3;
+  }
+  .prose-admin h2 {
+    @apply mb-2 mt-4 text-lg font-semibold text-navy-900;
+  }
+  .prose-admin h3 {
+    @apply mb-2 mt-3 text-base font-semibold text-navy-900;
+  }
+  .prose-admin ul {
+    @apply mb-3 list-disc pl-5;
+  }
+  .prose-admin ol {
+    @apply mb-3 list-decimal pl-5;
+  }
+  .prose-admin li {
+    @apply mb-1;
+  }
+  .prose-admin a {
+    @apply text-accent-600 underline;
+  }
+  .prose-admin table {
+    @apply my-3 w-full border-collapse text-sm;
+  }
+  .prose-admin th {
+    @apply border border-border bg-navy-50 px-3 py-2 text-left font-semibold;
+  }
+  .prose-admin td {
+    @apply border border-border px-3 py-2;
+  }
+  .prose-admin .selectedCell {
+    @apply bg-accent-50;
+  }
+
   .eyebrow {
     @apply text-xs font-semibold uppercase tracking-[0.14em] text-accent-600;
   }

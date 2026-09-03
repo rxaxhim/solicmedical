@@ -8,7 +8,7 @@ import type {
   ProductDocument,
   ProductVideo,
 } from "@/lib/products";
-import Markdown from "./Markdown";
+import RichText from "./RichText";
 import DocumentCard from "./DocumentCard";
 import VideoGrid from "./VideoGrid";
 import AccessoryGrid from "./AccessoryGrid";
@@ -110,7 +110,7 @@ export default function ProductTabs(props: ProductTabsProps) {
             hidden={active !== "overview"}
           >
             {overview ? (
-              <Markdown>{overview}</Markdown>
+              <RichText>{overview}</RichText>
             ) : (
               <p className="text-navy-600">
                 Overview information for this product is coming soon.
@@ -162,7 +162,7 @@ export default function ProductTabs(props: ProductTabsProps) {
                           <td className="px-5 py-4 align-top text-navy-700">
                             {c.config_details ? (
                               <div className="[&_p]:!mb-0">
-                                <Markdown>{c.config_details}</Markdown>
+                                <RichText>{c.config_details}</RichText>
                               </div>
                             ) : (
                               <span className="text-navy-300">—</span>

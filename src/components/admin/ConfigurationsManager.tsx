@@ -6,7 +6,7 @@ import { supabase } from "@/lib/supabase";
 import { revalidateCatalogue } from "@/app/admin/actions";
 import type { ProductConfiguration } from "@/lib/products";
 import AdminSection from "./AdminSection";
-import MarkdownField from "./MarkdownField";
+import RichTextEditor from "./RichTextEditor";
 
 export default function ConfigurationsManager({
   productId,
@@ -94,8 +94,8 @@ export default function ConfigurationsManager({
               placeholder="Configuration name"
               className="input mb-2 font-medium"
             />
-            <MarkdownField
-              rows={3}
+            <RichTextEditor
+              minHeight="162px"
               value={item.config_details ?? ""}
               onChange={(v) => edit(item.id, { config_details: v })}
               placeholder="Details"

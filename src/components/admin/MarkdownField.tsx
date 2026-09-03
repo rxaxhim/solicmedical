@@ -10,6 +10,8 @@ import {
   Heading2,
   Link2,
   Table as TableIcon,
+  Palette,
+  Type,
 } from "lucide-react";
 import TableBuilder from "./TableBuilder";
 
@@ -20,6 +22,26 @@ interface MarkdownFieldProps {
   placeholder?: string;
   id?: string;
 }
+
+/**
+ * Brand-approved text colours. Kept to a fixed palette rather than a free
+ * colour picker so admin-authored copy stays on-brand and readable.
+ */
+const TEXT_COLORS = [
+  { label: "Default navy", value: "#0A2540" },
+  { label: "Muted blue-grey", value: "#5C76A0" },
+  { label: "Brand orange", value: "#D17314" },
+  { label: "Deep navy", value: "#061A30" },
+  { label: "Success green", value: "#047857" },
+  { label: "Alert red", value: "#B91C1C" },
+];
+
+/** The site's own two faces, plus monospace for codes. */
+const FONTS = [
+  { label: "Body text (default)", value: "var(--font-sans)" },
+  { label: "Heading font", value: "var(--font-display)" },
+  { label: "Monospace (codes)", value: "ui-monospace, SFMono-Regular, monospace" },
+];
 
 /**
  * A textarea with a small formatting toolbar that inserts Markdown so the
@@ -35,6 +57,7 @@ export default function MarkdownField({
 }: MarkdownFieldProps) {
   const ref = useRef<HTMLTextAreaElement>(null);
   const [tableOpen, setTableOpen] = useState(false);
+  const [menu, setMenu] = useState<null | "color" | "font">(null);
 
   /**
    * Inserts a block (e.g. a table) at the cursor, guaranteeing the blank lines
@@ -134,6 +157,87 @@ export default function MarkdownField({
         >
           <TableIcon className="h-4 w-4" />
         </button>
+
+        <span className="mx-1 h-5 w-px bg-border" />
+
+        {/* Text colour */}
+        <div className="relative">
+          <button
+            type="button"
+            title="Text colour"
+            aria-label="Text colour"
+            className={btn}
+            onClick={() => setMenu((m) => (m === "color" ? null : "color"))}
+          >
+            <Palette className="h-4 w-4" />
+          </button>
+          {menu === "color" && (
+            <>
+              <div className="fixed inset-0 z-10" onClick={() => setMenu(null)} />
+              <div className="absolute left-0 top-9 z-20 w-52 rounded-md border border-border bg-white p-2 shadow-card-hover">
+                {TEXT_COLORS.map((c) => (
+                  <button
+                    key={c.value}
+                    type="button"
+                    onClick={() => {
+                      wrap(
+                        `<span style="color:${c.value}">`,
+                        "</span>",
+                        "coloured text",
+                      );
+                      setMenu(null);
+                    }}
+                    className="flex w-full items-center gap-2.5 rounded px-2 py-1.5 text-left text-sm text-navy-700 hover:bg-muted"
+                  >
+                    <span
+                      className="h-4 w-4 flex-none rounded-sm ring-1 ring-black/10"
+                      style={{ backgroundColor: c.value }}
+                    />
+                    {c.label}
+                  </button>
+                ))}
+              </div>
+            </>
+          )}
+        </div>
+
+        {/* Font */}
+        <div className="relative">
+          <button
+            type="button"
+            title="Font"
+            aria-label="Font"
+            className={btn}
+            onClick={() => setMenu((m) => (m === "font" ? null : "font"))}
+          >
+            <Type className="h-4 w-4" />
+          </button>
+          {menu === "font" && (
+            <>
+              <div className="fixed inset-0 z-10" onClick={() => setMenu(null)} />
+              <div className="absolute left-0 top-9 z-20 w-56 rounded-md border border-border bg-white p-2 shadow-card-hover">
+                {FONTS.map((f) => (
+                  <button
+                    key={f.value}
+                    type="button"
+                    onClick={() => {
+                      wrap(
+                        `<span style="font-family:${f.value}">`,
+                        "</span>",
+                        "text",
+                      );
+                      setMenu(null);
+                    }}
+                    style={{ fontFamily: f.value }}
+                    className="block w-full rounded px-2 py-1.5 text-left text-sm text-navy-700 hover:bg-muted"
+                  >
+                    {f.label}
+                  </button>
+                ))}
+              </div>
+            </>
+          )}
+        </div>
       </div>
       <textarea
         ref={ref}

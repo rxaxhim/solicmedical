@@ -12,7 +12,7 @@ import {
   type AccessoryCategoryOption,
 } from "@/lib/products";
 import AdminSection from "./AdminSection";
-import MarkdownField from "./MarkdownField";
+import RichTextEditor from "./RichTextEditor";
 
 export default function AccessoriesManager({
   productId,
@@ -263,8 +263,8 @@ export default function AccessoriesManager({
               >
                 {catOptions}
               </select>
-              <MarkdownField
-                rows={2}
+              <RichTextEditor
+                minHeight="128px"
                 value={a.description ?? ""}
                 onChange={(v) => edit(a.id, { description: v })}
                 placeholder="Description"
@@ -364,8 +364,8 @@ export default function AccessoriesManager({
           )}
         </div>
 
-        <MarkdownField
-          rows={2}
+        <RichTextEditor
+          minHeight="128px"
           value={description}
           onChange={setDescription}
           placeholder="Description (optional)"

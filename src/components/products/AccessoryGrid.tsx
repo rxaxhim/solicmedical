@@ -5,7 +5,7 @@ import Image from "next/image";
 import { ImageOff } from "lucide-react";
 import type { Accessory } from "@/lib/products";
 import ProductModal from "./ProductModal";
-import Markdown from "./Markdown";
+import RichText from "./RichText";
 
 const NONE = "__none";
 
@@ -149,7 +149,7 @@ export default function AccessoryGrid({
             )}
             {selected.description && (
               <div className="mt-3">
-                <Markdown>{selected.description}</Markdown>
+                <RichText>{selected.description}</RichText>
               </div>
             )}
           </div>

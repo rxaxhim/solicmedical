@@ -4,7 +4,7 @@ import { useState } from "react";
 import { supabase } from "@/lib/supabase";
 import { revalidateCatalogue } from "@/app/admin/actions";
 import AdminSection from "./AdminSection";
-import MarkdownField from "./MarkdownField";
+import RichTextEditor from "./RichTextEditor";
 
 export default function OverviewEditor({
   productId,
@@ -49,8 +49,8 @@ export default function OverviewEditor({
           {error}
         </p>
       )}
-      <MarkdownField
-        rows={10}
+      <RichTextEditor
+        minHeight="400px"
         value={content}
         onChange={(v) => {
           setContent(v);
