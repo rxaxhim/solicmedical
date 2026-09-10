@@ -35,10 +35,10 @@ export default function CustomHero({ hero }: { hero: HomepageHero }) {
             alt=""
             fill
             priority
-            className="object-cover opacity-40"
+            className="object-cover opacity-65"
           />
         )}
-        <div className="absolute inset-0 bg-gradient-to-r from-navy-900 via-navy-900/85 to-navy-900/40" />
+        <div className="absolute inset-0 bg-gradient-to-r from-navy-900/90 via-navy-900/60 to-navy-900/20" />
       </div>
 
       <div className="container-x relative py-10 lg:py-12">

@@ -24,8 +24,8 @@ interface ProductTabsProps {
 const TABS = [
   { id: "overview", label: "Overview", icon: FileText },
   { id: "configurations", label: "Configurations", icon: Settings2 },
-  { id: "documentation", label: "Education & Documentation", icon: BookOpen },
   { id: "accessories", label: "Parts & Accessories", icon: Package },
+  { id: "documentation", label: "Education & Documentation", icon: BookOpen },
 ] as const;
 
 type TabId = (typeof TABS)[number]["id"];
@@ -87,10 +87,10 @@ export default function ProductTabs(props: ProductTabsProps) {
                 aria-controls={`panel-${tab.id}`}
                 tabIndex={selected ? 0 : -1}
                 onClick={() => selectTab(tab.id)}
-                className={`flex flex-none items-center gap-2 whitespace-nowrap border-b-[3px] px-4 py-4 text-sm transition-colors ${
+                className={`flex flex-none items-center gap-2 whitespace-nowrap border-b-[3px] px-4 py-4 font-display text-[15px] font-bold transition-colors ${
                   selected
-                    ? "border-navy-800 font-semibold text-navy-900"
-                    : "border-transparent font-medium text-navy-500 hover:text-navy-800"
+                    ? "border-accent-500 text-accent-600"
+                    : "border-transparent text-navy-700 hover:text-accent-600"
                 }`}
               >
                 <Icon className="h-4 w-4" />
@@ -181,6 +181,16 @@ export default function ProductTabs(props: ProductTabsProps) {
             )}
           </div>
 
+          {/* Parts & Accessories */}
+          <div
+            role="tabpanel"
+            id="panel-accessories"
+            aria-labelledby="tab-accessories"
+            hidden={active !== "accessories"}
+          >
+            <AccessoryGrid accessories={accessories} />
+          </div>
+
           {/* Education & Documentation */}
           <div
             role="tabpanel"
@@ -217,16 +227,6 @@ export default function ProductTabs(props: ProductTabsProps) {
                 coming soon.
               </p>
             )}
-          </div>
-
-          {/* Parts & Accessories */}
-          <div
-            role="tabpanel"
-            id="panel-accessories"
-            aria-labelledby="tab-accessories"
-            hidden={active !== "accessories"}
-          >
-            <AccessoryGrid accessories={accessories} />
           </div>
         </div>
       </div>

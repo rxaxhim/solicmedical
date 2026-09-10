@@ -16,12 +16,18 @@ export default function AccessoryGrid({
 }) {
   // Distinct categories present, in first-appearance order.
   const categories = useMemo(() => {
-    const seen = new Map<string, string>();
+    const seen = new Map<string, { name: string; count: number }>();
     for (const a of accessories) {
       const slug = a.category_slug ?? NONE;
-      if (!seen.has(slug)) seen.set(slug, a.category_name ?? "Other");
+      const entry = seen.get(slug);
+      if (entry) entry.count += 1;
+      else seen.set(slug, { name: a.category_name ?? "Other", count: 1 });
     }
-    return Array.from(seen, ([slug, name]) => ({ slug, name }));
+    return Array.from(seen, ([slug, { name, count }]) => ({
+      slug,
+      name,
+      count,
+    }));
   }, [accessories]);
 
   // Require a category to be selected; auto-select if there's only one.
@@ -53,20 +59,30 @@ export default function AccessoryGrid({
               key={c.slug}
               type="button"
               onClick={() => setSelectedCat(c.slug)}
-              className={`rounded-full border px-4 py-2 text-sm font-medium transition-colors ${
+              aria-pressed={active}
+              className={`inline-flex items-center gap-2 rounded-full px-4 py-2 font-display text-sm font-bold transition-all duration-200 ${
                 active
-                  ? "border-navy-800 bg-navy-800 text-white"
-                  : "border-border bg-white text-navy-700 hover:border-navy-400"
+                  ? "-translate-y-px bg-accent-500 text-navy-900 shadow-[0_6px_16px_-6px_rgba(238,136,38,0.85)]"
+                  : "bg-navy-50 text-navy-700 hover:bg-navy-100 hover:text-navy-900"
               }`}
             >
               {c.name}
+              <span
+                className={`rounded-full px-1.5 py-0.5 text-[11px] font-bold leading-none tabular-nums ${
+                  active
+                    ? "bg-navy-900/15 text-navy-900"
+                    : "bg-white text-navy-500"
+                }`}
+              >
+                {c.count}
+              </span>
             </button>
           );
         })}
       </div>
 
       {selectedCat === null ? (
-        <p className="rounded-lg border border-dashed border-border bg-muted py-12 text-center text-sm text-navy-600">
+        <p className="rounded-lg border border-dashed border-border bg-muted py-12 text-center text-base font-medium text-navy-800">
           Select a category above to view its parts &amp; accessories.
         </p>
       ) : (

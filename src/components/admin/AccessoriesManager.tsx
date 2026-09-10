@@ -37,6 +37,7 @@ export default function AccessoriesManager({
   const [busy, setBusy] = useState(false);
   const [savingId, setSavingId] = useState<string | null>(null);
   const [replacingId, setReplacingId] = useState<string | null>(null);
+  const [removingImageId, setRemovingImageId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
   const replaceRefs = useRef<Record<string, HTMLInputElement | null>>({});
@@ -165,6 +166,26 @@ export default function AccessoriesManager({
     }
   }
 
+  async function removeImage(item: Accessory) {
+    if (!window.confirm(`Remove the image for "${item.name || "this accessory"}"?`))
+      return;
+    setRemovingImageId(item.id);
+    setError(null);
+    try {
+      const { error } = await supabase
+        .from("accessories")
+        .update({ image_url: null })
+        .eq("id", item.id);
+      if (error) throw error;
+      edit(item.id, { image_url: null });
+      await revalidateCatalogue(productSlug);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to remove image.");
+    } finally {
+      setRemovingImageId(null);
+    }
+  }
+
   async function remove(id: string) {
     if (!window.confirm("Delete this accessory?")) return;
     const { error } = await supabase.from("accessories").delete().eq("id", id);
@@ -217,15 +238,32 @@ export default function AccessoriesManager({
                   </span>
                 )}
               </div>
-              <button
-                type="button"
-                onClick={() => replaceRefs.current[a.id]?.click()}
-                disabled={replacingId === a.id}
-                className="mt-2 inline-flex items-center gap-1 text-xs font-medium text-navy-600 hover:text-navy-900 disabled:opacity-60"
-              >
-                <RefreshCw className="h-3 w-3" />
-                {replacingId === a.id ? "Uploading…" : "Replace"}
-              </button>
+              <div className="mt-2 flex items-center gap-3">
+                <button
+                  type="button"
+                  onClick={() => replaceRefs.current[a.id]?.click()}
+                  disabled={replacingId === a.id || removingImageId === a.id}
+                  className="inline-flex items-center gap-1 text-xs font-medium text-navy-600 hover:text-navy-900 disabled:opacity-60"
+                >
+                  <RefreshCw className="h-3 w-3" />
+                  {replacingId === a.id
+                    ? "Uploading…"
+                    : a.image_url
+                      ? "Replace"
+                      : "Add image"}
+                </button>
+                {a.image_url && (
+                  <button
+                    type="button"
+                    onClick={() => removeImage(a)}
+                    disabled={replacingId === a.id || removingImageId === a.id}
+                    className="inline-flex items-center gap-1 text-xs font-medium text-accent-600 hover:text-accent-700 disabled:opacity-60"
+                  >
+                    <Trash2 className="h-3 w-3" />
+                    {removingImageId === a.id ? "Removing…" : "Remove"}
+                  </button>
+                )}
+              </div>
               <input
                 ref={(el) => {
                   replaceRefs.current[a.id] = el;

@@ -39,22 +39,19 @@ export default function Footer() {
           {/* Brand block */}
           <div className="md:col-span-4">
             <div className="flex items-center gap-3">
-              <div className="relative h-16 w-20 rounded-md bg-white p-1">
-                <Image
-                  src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/images/logo.png`}
-                  alt="Solic Medical"
-                  fill
-                  className="object-contain p-1"
-                />
+              <div className="rounded-md bg-white p-2">
+                <div className="relative h-[52px] w-[98px]">
+                  <Image
+                    src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/images/logo-mark.png`}
+                    alt="Solic Medical"
+                    fill
+                    className="object-contain"
+                  />
+                </div>
               </div>
-              <div className="leading-tight">
-                <span className="block text-lg font-bold text-white">
-                  Solic Medical
-                </span>
-                <span className="block text-[10px] font-medium uppercase tracking-[0.15em] text-navy-300">
-                  Equipment Supplier
-                </span>
-              </div>
+              <span className="font-display text-2xl font-bold tracking-tight text-white">
+                Solic Medical
+              </span>
             </div>
             <p className="mt-5 max-w-sm text-sm leading-relaxed text-navy-200">
               A trusted Canadian supplier of medical and surgical equipment for
