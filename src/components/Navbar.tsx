@@ -77,25 +77,38 @@ export default function Navbar() {
           scrolled ? 'shadow-card' : ''
         }`}
       >
-        {/* Angled brand panel — the original site's signature, with a crisp
-            orange edge running along the diagonal. */}
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-y-0 left-0 hidden w-[30%] lg:block"
-        >
-          {/* orange sliver, revealed along the diagonal by the panel on top */}
-          <div
-            className="absolute inset-0 translate-x-[6px] bg-accent-500"
-            style={{ clipPath: 'polygon(0 0, calc(100% - 72px) 0, 100% 100%, 0 100%)' }}
-          />
-          <div
-            className="absolute inset-0 bg-gradient-to-r from-navy-200 via-navy-100 to-navy-50"
-            style={{ clipPath: 'polygon(0 0, calc(100% - 72px) 0, 100% 100%, 0 100%)' }}
-          />
-        </div>
         <nav className="container-x relative flex h-20 items-center justify-between">
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-2.5">
+          {/* Logo. `self-stretch` makes this the full navbar height so the
+              angled panel below can span it. */}
+          <Link href="/" className="relative flex items-center gap-2.5 self-stretch">
+            {/* Angled brand panel — the original site's signature, with a crisp
+                orange edge running along the diagonal. Anchored to this link
+                rather than to a share of the viewport, so the diagonal always
+                clears the wordmark by the same gap at every screen width: the
+                right edge sits 104px past the text, and the clip-path pulls the
+                top of the diagonal back 72px of that, leaving a 32px gap.
+                Only from xl up: below 1280px the wordmark runs straight into
+                the nav links, so the diagonal has nowhere to land. */}
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-y-0 -left-[100vw] -right-[104px] hidden xl:block"
+            >
+              {/* orange sliver, revealed along the diagonal by the panel on top */}
+              <div
+                className="absolute inset-0 translate-x-[6px] bg-accent-500"
+                style={{ clipPath: 'polygon(0 0, calc(100% - 72px) 0, 100% 100%, 0 100%)' }}
+              />
+              {/* The panel bleeds a full viewport to the left, so the gradient
+                  is pinned to a fixed 400px span at the right edge and the
+                  base colour fills the rest — otherwise it stretches across
+                  the bleed and washes out to nothing. 400px keeps the ramp
+                  inside the panel at every width, so the tone reads the same
+                  at 1280 as it does at 2560. */}
+              <div
+                className="absolute inset-0 bg-navy-300 bg-gradient-to-r from-navy-300 via-navy-200 to-navy-100 bg-[length:400px_100%] bg-right bg-no-repeat"
+                style={{ clipPath: 'polygon(0 0, calc(100% - 72px) 0, 100% 100%, 0 100%)' }}
+              />
+            </div>
             <div className="relative h-[52px] w-[98px]">
               <Image
                 src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/images/logo-mark.png`}
@@ -105,7 +118,7 @@ export default function Navbar() {
                 className="object-contain"
               />
             </div>
-            <span className="font-display text-2xl font-bold tracking-tight text-navy-800">
+            <span className="relative font-display text-2xl font-bold tracking-tight text-navy-800">
               Solic Medical
             </span>
           </Link>
