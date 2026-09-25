@@ -2,12 +2,33 @@
 
 import { useMemo, useState } from "react";
 import Image from "next/image";
-import { ImageOff } from "lucide-react";
 import type { Accessory } from "@/lib/products";
 import ProductModal from "./ProductModal";
 import RichText from "./RichText";
 
 const NONE = "__none";
+
+/**
+ * Stand-in for accessories with no photo: the Solic mark in its own colours,
+ * dulled back to a watermark. Kept to roughly half the panel width so it reads
+ * as a deliberate placeholder rather than a broken image, and capped at the
+ * asset's native 258px so it never upscales.
+ */
+function LogoPlaceholder() {
+  return (
+    <div className="flex h-full w-full items-center justify-center p-4">
+      <Image
+        src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/images/logo-mark.png`}
+        alt=""
+        aria-hidden
+        width={258}
+        height={137}
+        sizes="258px"
+        className="h-auto w-[60%] max-w-[258px] opacity-30"
+      />
+    </div>
+  );
+}
 
 export default function AccessoryGrid({
   accessories,
@@ -89,9 +110,7 @@ export default function AccessoryGrid({
                     className="object-contain p-2 transition-transform duration-300 group-hover:scale-[1.03]"
                   />
                 ) : (
-                  <div className="flex h-full items-center justify-center text-navy-200">
-                    <ImageOff className="h-6 w-6" strokeWidth={1.5} />
-                  </div>
+                  <LogoPlaceholder />
                 )}
               </div>
               <div className="p-2.5">
@@ -132,9 +151,7 @@ export default function AccessoryGrid({
                   className="object-contain p-8"
                 />
               ) : (
-                <div className="flex h-full items-center justify-center text-navy-200">
-                  <ImageOff className="h-12 w-12" strokeWidth={1.5} />
-                </div>
+                <LogoPlaceholder />
               )}
             </div>
             <h3
