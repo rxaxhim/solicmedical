@@ -16,18 +16,12 @@ export default function AccessoryGrid({
 }) {
   // Distinct categories present, in first-appearance order.
   const categories = useMemo(() => {
-    const seen = new Map<string, { name: string; count: number }>();
+    const seen = new Map<string, string>();
     for (const a of accessories) {
       const slug = a.category_slug ?? NONE;
-      const entry = seen.get(slug);
-      if (entry) entry.count += 1;
-      else seen.set(slug, { name: a.category_name ?? "Other", count: 1 });
+      if (!seen.has(slug)) seen.set(slug, a.category_name ?? "Other");
     }
-    return Array.from(seen, ([slug, { name, count }]) => ({
-      slug,
-      name,
-      count,
-    }));
+    return Array.from(seen, ([slug, name]) => ({ slug, name }));
   }, [accessories]);
 
   // Require a category to be selected; auto-select if there's only one.
@@ -60,22 +54,13 @@ export default function AccessoryGrid({
               type="button"
               onClick={() => setSelectedCat(c.slug)}
               aria-pressed={active}
-              className={`inline-flex items-center gap-2 rounded-full px-4 py-2 font-display text-sm font-bold transition-all duration-200 ${
+              className={`rounded-full px-4 py-2 font-display text-sm font-bold transition-all duration-200 ${
                 active
                   ? "-translate-y-px bg-accent-500 text-navy-900 shadow-[0_6px_16px_-6px_rgba(238,136,38,0.85)]"
                   : "bg-navy-50 text-navy-700 hover:bg-navy-100 hover:text-navy-900"
               }`}
             >
               {c.name}
-              <span
-                className={`rounded-full px-1.5 py-0.5 text-[11px] font-bold leading-none tabular-nums ${
-                  active
-                    ? "bg-navy-900/15 text-navy-900"
-                    : "bg-white text-navy-500"
-                }`}
-              >
-                {c.count}
-              </span>
             </button>
           );
         })}
